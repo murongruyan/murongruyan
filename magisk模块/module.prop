@@ -1,0 +1,8 @@
+id=murongruyan
+name=ColorOS去除温控并开启Color墓碑完全体
+version=4.0
+versionCode=40
+author=慕容茹艳（酷安慕容雪绒）
+description=移除温控，自定义温控墙(按电池温度计算)，开启ColorOS全墓碑以提升续航。
+minMagisk=17000
+updateJson=https://raw.githubusercontent.com/murongruyan/murongruyan/main/update1.json

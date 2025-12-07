@@ -1,0 +1,8 @@
+libthermal_hook.so
+thermal_monitor
+logs/
+*.log
+magisk模块/bin/libthermal_hook.so
+magisk模块/bin/thermal_monitor
+.DS_Store
+Thumbs.db

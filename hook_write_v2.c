@@ -93,9 +93,10 @@ static void read_temperature() {
         }
         fclose(fp);
         
-        snprintf(log_buffer, sizeof(log_buffer), 
-                "从 %s 读取温度: %d", config_path, last_temperature);
-        write_log(log_buffer);
+        // 减少日志刷屏，仅在出错时记录
+        // snprintf(log_buffer, sizeof(log_buffer), 
+        //         "从 %s 读取温度: %d", config_path, last_temperature);
+        // write_log(log_buffer);
     } else {
         snprintf(log_buffer, sizeof(log_buffer),
                 "无法打开配置文件: %s，使用默认温度36000", config_path);
@@ -155,15 +156,16 @@ ssize_t write(int fd, const void *buf, size_t count) {
                           last_temperature, last_temperature,
                           last_temperature, last_temperature);
         } else { // thermal_zone
-             snprintf(log_buffer, sizeof(log_buffer),
-                    "拦截到对thermal_zone的写入，目标温度: %d", last_temperature);
-             write_log(log_buffer);
+             // 减少日志
+             // snprintf(log_buffer, sizeof(log_buffer),
+             //        "拦截到对thermal_zone的写入，目标温度: %d", last_temperature);
+             // write_log(log_buffer);
              
              len = snprintf(new_content, sizeof(new_content), "%d\n", last_temperature);
         }
         
         // 记录日志（为了防止日志刷屏，仅在 shell-temp 时频繁记录，thermal_zone 偶尔记录）
-        if (file_type == 1) {
+        if (file_type == 1 && rand() % 100 == 0) {
              snprintf(log_buffer, sizeof(log_buffer),
                     "覆盖写入: %s", new_content);
              write_log(log_buffer);
@@ -196,8 +198,8 @@ ssize_t read(int fd, void *buf, size_t count) {
         
         memcpy(buf, fake_content, len);
         
-        // 偶尔记录日志
-        if (rand() % 100 == 0) {
+        // 极少记录日志 (1/5000 概率)
+        if (rand() % 5000 == 0) {
             snprintf(log_buffer, sizeof(log_buffer),
                     "拦截到读取操作，返回伪造温度: %d", last_temperature);
             write_log(log_buffer);
@@ -255,11 +257,11 @@ int open(const char *pathname, int flags, ...) {
     }
     
     // 记录对shell-temp的打开操作
-    if (strstr(pathname, "shell-temp") != NULL) {
-        snprintf(log_buffer, sizeof(log_buffer),
-                "进程 %d 打开了文件: %s", getpid(), pathname);
-        write_log(log_buffer);
-    }
+    // if (strstr(pathname, "shell-temp") != NULL) {
+    //    snprintf(log_buffer, sizeof(log_buffer),
+    //            "进程 %d 打开了文件: %s", getpid(), pathname);
+    //    write_log(log_buffer);
+    // }
     
     if (mode) {
         return real_open(pathname, flags, mode);

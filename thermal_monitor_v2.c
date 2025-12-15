@@ -216,10 +216,11 @@ void monitor_thermal_file() {
                 if (fp) {
                     char content[256];
                     if (fgets(content, sizeof(content), fp)) {
-                        char msg[256];
-                        snprintf(msg, sizeof(msg), 
-                                "文件被修改，当前内容: %s", content);
-                        write_log(msg);
+                        // 减少日志刷屏，不再记录每次内容变化
+                        // char msg[256];
+                        // snprintf(msg, sizeof(msg), 
+                        //         "文件被修改，当前内容: %s", content);
+                        // write_log(msg);
                     }
                     fclose(fp);
                 }

@@ -1,6 +1,6 @@
 {
-  "version": "4.0",
-  "versionCode": 40,
-  "zipUrl": "https://github.com/murongruyan/murongruyan/releases/download/慕容调度/murongruyan-tombstone-4.0.zip",
+  "version": "4.2",
+  "versionCode": 42,
+  "zipUrl": "https://github.com/murongruyan/murongruyan/releases/download/ColorOS15移除温控并开启ColorOS墓碑完全体/murongruyan-tombstone-4.2.zip",
   "changelog": "https://raw.githubusercontent.com/murongruyan/murongruyan/main/changelog.txt"
 }

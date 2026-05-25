@@ -25,7 +25,10 @@
 *   `hook_write_v2.c`: 核心 Hook 库源码，实现 `read`/`write`/`open` 的劫持逻辑。
 *   `thermal_monitor_v2.c`: 守护进程源码，负责通过 `inotify` 监控文件和进程状态。
 *   `compile_final.bat`: Windows 平台下的一键编译脚本（需 NDK）。
-*   `magisk模块/`: 包含模块的安装脚本 (`customize.sh`)、启动脚本 (`service.sh`) 等。
+*   `module-common/`: 两个模块共用的安装脚本、启动脚本、动态温控脚本、`META-INF` 和 `bin/` 二进制资源。
+*   `ColorOS淦残温控并仅挂载freezerV2(frozen)/`: freezerV2 变体，仅保留 `module.prop`。
+*   `ColorOS移除温控并开启ColorOS墓碑完全体/`: 墓碑完全体变体，仅保留 `module.prop` 和 `data/` 差异文件。
+*   `.github/workflows/build-modules.yml`: GitHub Actions 工作流，按“公共层 + 变体层”自动打包并发版。
 
 ## 编译说明 / Build
 本项目依赖 Android NDK 进行编译。
@@ -34,7 +37,8 @@
 2.  编辑 `compile_final.bat`，将 `NDK_ROOT` 修改为你本地的 NDK 路径。
 3.  双击运行 `compile_final.bat`。
 4.  编译成功后，会生成 `libthermal_hook.so` 和 `thermal_monitor` 两个文件。
-5.  将这两个文件复制到 `magisk模块/bin/` 目录下即可打包。
+5.  本地打包时，将这两个文件放入 `module-common/bin/` 中。
+6.  GitHub Actions 发版时会在 Ubuntu Runner 上使用 Android NDK 自动重新编译这两个二进制，再组装成最终模块包。
 
 ## 免责声明 / Disclaimer
 *   本模块通过修改系统底层行为实现功能，属于高风险操作。

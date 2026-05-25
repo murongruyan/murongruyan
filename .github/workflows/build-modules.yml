@@ -1,0 +1,338 @@
+name: Build Murong Modules
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches: ["main", "master"]
+  workflow_dispatch:
+    inputs:
+      freezer_version:
+        description: "freezerV2 模块版本号，如 3.2"
+        required: false
+      freezer_version_code:
+        description: "freezerV2 模块 versionCode，如 32"
+        required: false
+      tombstone_version:
+        description: "墓碑完全体模块版本号，如 4.3"
+        required: false
+      tombstone_version_code:
+        description: "墓碑完全体模块 versionCode，如 43"
+        required: false
+      release_tag:
+        description: "GitHub Release 标签，默认固定标签 慕容调度"
+        required: false
+      release_name:
+        description: "Release 标题，默认 慕容调度"
+        required: false
+      release_notes:
+        description: "GitHub Release 发布页说明，不同步到 changelog.txt"
+        required: false
+      changelog_notes:
+        description: "changelog.txt 说明，不同步到发布页"
+        required: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Prepare Release Metadata
+        shell: bash
+        env:
+          INPUT_FREEZER_VERSION: ${{ github.event.inputs.freezer_version }}
+          INPUT_FREEZER_VERSION_CODE: ${{ github.event.inputs.freezer_version_code }}
+          INPUT_TOMBSTONE_VERSION: ${{ github.event.inputs.tombstone_version }}
+          INPUT_TOMBSTONE_VERSION_CODE: ${{ github.event.inputs.tombstone_version_code }}
+          INPUT_RELEASE_TAG: ${{ github.event.inputs.release_tag }}
+          INPUT_RELEASE_NAME: ${{ github.event.inputs.release_name }}
+          INPUT_RELEASE_NOTES: ${{ github.event.inputs.release_notes }}
+        run: |
+          set -euo pipefail
+
+          FREEZER_PROP='ColorOS淦残温控并仅挂载freezerV2(frozen)/module.prop'
+          TOMBSTONE_PROP='ColorOS移除温控并开启ColorOS墓碑完全体/module.prop'
+
+          freezer_version="$(grep '^version=' "$FREEZER_PROP" | head -n1 | cut -d= -f2-)"
+          freezer_version_code="$(grep '^versionCode=' "$FREEZER_PROP" | head -n1 | cut -d= -f2-)"
+          tombstone_version="$(grep '^version=' "$TOMBSTONE_PROP" | head -n1 | cut -d= -f2-)"
+          tombstone_version_code="$(grep '^versionCode=' "$TOMBSTONE_PROP" | head -n1 | cut -d= -f2-)"
+
+          if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
+            freezer_version="${INPUT_FREEZER_VERSION:-$freezer_version}"
+            freezer_version_code="${INPUT_FREEZER_VERSION_CODE:-$freezer_version_code}"
+            tombstone_version="${INPUT_TOMBSTONE_VERSION:-$tombstone_version}"
+            tombstone_version_code="${INPUT_TOMBSTONE_VERSION_CODE:-$tombstone_version_code}"
+          fi
+
+          for value in "$freezer_version" "$freezer_version_code" "$tombstone_version" "$tombstone_version_code"; do
+            if [[ -z "$value" ]]; then
+              echo "Missing module metadata."
+              exit 1
+            fi
+          done
+
+          default_release_tag="慕容调度"
+          default_release_name="慕容调度"
+          release_tag="${INPUT_RELEASE_TAG:-$default_release_tag}"
+          release_name="${INPUT_RELEASE_NAME:-$default_release_name}"
+          freezer_zip="murongruyan-freezerV2-${freezer_version}.zip"
+          tombstone_zip="murongruyan-tombstone-${tombstone_version}.zip"
+          raw_base_url="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_REF_NAME}"
+          release_notes_file="${RUNNER_TEMP}/murong-modules-release-notes.txt"
+
+          if [[ -n "${INPUT_RELEASE_NOTES:-}" ]]; then
+            printf '%s\n' "${INPUT_RELEASE_NOTES}" > "${release_notes_file}"
+          else
+            {
+              printf 'freezerV2: %s\n' "${freezer_version}"
+              printf '墓碑完全体: %s\n' "${tombstone_version}"
+            } > "${release_notes_file}"
+          fi
+
+          {
+            echo "FREEZER_VERSION=${freezer_version}"
+            echo "FREEZER_VERSION_CODE=${freezer_version_code}"
+            echo "TOMBSTONE_VERSION=${tombstone_version}"
+            echo "TOMBSTONE_VERSION_CODE=${tombstone_version_code}"
+            echo "RELEASE_TAG=${release_tag}"
+            echo "RELEASE_NAME=${release_name}"
+            echo "FREEZER_ZIP=${freezer_zip}"
+            echo "TOMBSTONE_ZIP=${tombstone_zip}"
+            echo "RAW_BASE_URL=${raw_base_url}"
+            echo "RELEASE_NOTES_FILE=${release_notes_file}"
+          } >> "${GITHUB_ENV}"
+
+      - name: Update Version Files
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        env:
+          INPUT_CHANGELOG_NOTES: ${{ github.event.inputs.changelog_notes }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          modules = [
+              {
+                  "prop": Path("ColorOS淦残温控并仅挂载freezerV2(frozen)/module.prop"),
+                  "version": os.environ["FREEZER_VERSION"],
+                  "version_code": int(os.environ["FREEZER_VERSION_CODE"]),
+                  "update_json": Path("update.json"),
+                  "zip_name": os.environ["FREEZER_ZIP"],
+              },
+              {
+                  "prop": Path("ColorOS移除温控并开启ColorOS墓碑完全体/module.prop"),
+                  "version": os.environ["TOMBSTONE_VERSION"],
+                  "version_code": int(os.environ["TOMBSTONE_VERSION_CODE"]),
+                  "update_json": Path("update1.json"),
+                  "zip_name": os.environ["TOMBSTONE_ZIP"],
+              },
+          ]
+
+          raw_base_url = os.environ["RAW_BASE_URL"]
+          repo = os.environ["GITHUB_REPOSITORY"]
+          release_tag = os.environ["RELEASE_TAG"]
+          changelog_notes = os.environ.get("INPUT_CHANGELOG_NOTES", "").strip()
+
+          for item in modules:
+              lines = item["prop"].read_text(encoding="utf-8").splitlines()
+              updated = []
+              for line in lines:
+                  if line.startswith("version="):
+                      updated.append(f"version={item['version']}")
+                  elif line.startswith("versionCode="):
+                      updated.append(f"versionCode={item['version_code']}")
+                  else:
+                      updated.append(line)
+              item["prop"].write_text("\n".join(updated) + "\n", encoding="utf-8")
+
+              payload = {
+                  "version": item["version"],
+                  "versionCode": item["version_code"],
+                  "zipUrl": f"https://github.com/{repo}/releases/download/{release_tag}/{item['zip_name']}",
+                  "changelog": f"{raw_base_url}/changelog.txt",
+              }
+              item["update_json"].write_text(
+                  json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                  encoding="utf-8",
+              )
+
+          changelog_path = Path("changelog.txt")
+          old = changelog_path.read_text(encoding="utf-8") if changelog_path.exists() else ""
+          timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+          notes = changelog_notes or (
+              f"freezerV2 {os.environ['FREEZER_VERSION']}\n"
+              f"墓碑完全体 {os.environ['TOMBSTONE_VERSION']}"
+          )
+          header = (
+              f"freezerV2 {os.environ['FREEZER_VERSION']} | "
+              f"墓碑完全体 {os.environ['TOMBSTONE_VERSION']} | {timestamp}\n"
+          )
+          changelog_path.write_text(header + notes + "\n\n" + old, encoding="utf-8")
+          PY
+
+      - name: Set Up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android NDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          yes | sdkmanager --licenses > /dev/null || true
+          sdkmanager --install "ndk;27.3.13750724"
+
+      - name: Build Runtime Binaries
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          export ANDROID_NDK_ROOT="${ANDROID_SDK_ROOT}/ndk/27.3.13750724"
+          export TOOLCHAIN="${ANDROID_NDK_ROOT}/toolchains/llvm/prebuilt/linux-x86_64"
+          export SYSROOT="${TOOLCHAIN}/sysroot"
+          export TARGET="aarch64-linux-android29"
+          export CLANG="${TOOLCHAIN}/bin/${TARGET}-clang"
+          export OUTPUT_DIR="build/runtime"
+
+          mkdir -p "${OUTPUT_DIR}"
+
+          "${CLANG}" \
+            --target="${TARGET}" \
+            --sysroot="${SYSROOT}" \
+            -shared -fPIC -Wall -O3 \
+            -o "${OUTPUT_DIR}/libthermal_hook.so" \
+            hook_write_v2.c \
+            -ldl -lc
+
+          "${CLANG}" \
+            --target="${TARGET}" \
+            --sysroot="${SYSROOT}" \
+            -Wall -O3 -fPIE -pie \
+            -o "${OUTPUT_DIR}/thermal_monitor" \
+            thermal_monitor_v2.c \
+            -lc
+
+          chmod 755 "${OUTPUT_DIR}/thermal_monitor"
+
+      - name: Package Modules
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import shutil
+          from pathlib import Path
+
+          root = Path.cwd()
+          dist = root / "dist"
+          if dist.exists():
+              shutil.rmtree(dist)
+          dist.mkdir()
+
+          required_bins = [
+              root / "build" / "runtime" / "libthermal_hook.so",
+              root / "build" / "runtime" / "thermal_monitor",
+          ]
+          missing = [str(path) for path in required_bins if not path.exists()]
+          if missing:
+              raise FileNotFoundError(f"Missing runtime binaries: {missing}")
+
+          runtime_dir = root / "build" / "runtime"
+          freezer_variant = root / "ColorOS淦残温控并仅挂载freezerV2(frozen)"
+          tombstone_variant = root / "ColorOS移除温控并开启ColorOS墓碑完全体"
+          common_dir = root / "module-common"
+
+          def inject_runtime(target_dir: Path) -> None:
+              bin_dir = target_dir / "bin"
+              bin_dir.mkdir(parents=True, exist_ok=True)
+              shutil.copy2(runtime_dir / "libthermal_hook.so", bin_dir / "libthermal_hook.so")
+              shutil.copy2(runtime_dir / "thermal_monitor", bin_dir / "thermal_monitor")
+
+          def package_target(target_dir: Path, zip_path: Path) -> None:
+              inject_runtime(target_dir)
+              archive_base = zip_path.with_suffix("")
+              shutil.make_archive(str(archive_base), "zip", root_dir=target_dir, base_dir=".")
+
+          if common_dir.exists():
+              variants = [
+                  (
+                      freezer_variant,
+                      dist / "freezer",
+                      dist / Path(__import__("os").environ["FREEZER_ZIP"]),
+                  ),
+                  (
+                      tombstone_variant,
+                      dist / "tombstone",
+                      dist / Path(__import__("os").environ["TOMBSTONE_ZIP"]),
+                  ),
+              ]
+              for variant_path, target_dir, zip_path in variants:
+                  shutil.copytree(common_dir, target_dir)
+                  shutil.copytree(variant_path, target_dir, dirs_exist_ok=True)
+                  package_target(target_dir, zip_path)
+          else:
+              if not tombstone_variant.exists():
+                  raise FileNotFoundError("Missing legacy tombstone module directory.")
+
+              freezer_target = dist / "freezer"
+              shutil.copytree(tombstone_variant, freezer_target)
+              shutil.rmtree(freezer_target / "data", ignore_errors=True)
+              shutil.copy2(freezer_variant / "module.prop", freezer_target / "module.prop")
+              package_target(freezer_target, dist / Path(__import__("os").environ["FREEZER_ZIP"]))
+
+              tombstone_target = dist / "tombstone"
+              shutil.copytree(tombstone_variant, tombstone_target)
+              package_target(tombstone_target, dist / Path(__import__("os").environ["TOMBSTONE_ZIP"]))
+          PY
+
+      - name: Upload Module Zips
+        uses: actions/upload-artifact@v4
+        with:
+          name: murongruyan-modules
+          path: |
+            dist/${{ env.FREEZER_ZIP }}
+            dist/${{ env.TOMBSTONE_ZIP }}
+
+      - name: Commit Version Files
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "ColorOS淦残温控并仅挂载freezerV2(frozen)/module.prop" \
+                  "ColorOS移除温控并开启ColorOS墓碑完全体/module.prop" \
+                  update.json update1.json changelog.txt
+          if git diff --cached --quiet; then
+            echo "No version file changes to commit."
+          else
+            git commit -m "chore: release modules [skip ci]"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+
+      - name: Capture Release Commit
+        if: github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: echo "RELEASE_COMMIT_SHA=$(git rev-parse HEAD)" >> "${GITHUB_ENV}"
+
+      - name: Publish GitHub Release
+        if: github.event_name == 'workflow_dispatch'
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          artifactErrorsFailBuild: true
+          artifacts: dist/${{ env.FREEZER_ZIP }},dist/${{ env.TOMBSTONE_ZIP }}
+          bodyFile: ${{ env.RELEASE_NOTES_FILE }}
+          commit: ${{ env.RELEASE_COMMIT_SHA }}
+          makeLatest: true
+          name: ${{ env.RELEASE_NAME }}
+          replacesArtifacts: true
+          tag: ${{ env.RELEASE_TAG }}

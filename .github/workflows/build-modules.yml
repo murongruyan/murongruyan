@@ -20,11 +20,11 @@ on:
       tombstone_version_code:
         description: "墓碑完全体模块 versionCode，如 43"
         required: false
-      release_tag:
-        description: "GitHub Release 标签，默认固定标签 慕容调度"
+      freezer_release_tag:
+        description: "freezerV2 对应旧 Release 标签"
         required: false
-      release_name:
-        description: "Release 标题，默认 慕容调度"
+      tombstone_release_tag:
+        description: "墓碑完全体对应旧 Release 标签"
         required: false
       release_notes:
         description: "GitHub Release 发布页说明，不同步到 changelog.txt"
@@ -50,8 +50,8 @@ jobs:
           INPUT_FREEZER_VERSION_CODE: ${{ github.event.inputs.freezer_version_code }}
           INPUT_TOMBSTONE_VERSION: ${{ github.event.inputs.tombstone_version }}
           INPUT_TOMBSTONE_VERSION_CODE: ${{ github.event.inputs.tombstone_version_code }}
-          INPUT_RELEASE_TAG: ${{ github.event.inputs.release_tag }}
-          INPUT_RELEASE_NAME: ${{ github.event.inputs.release_name }}
+          INPUT_FREEZER_RELEASE_TAG: ${{ github.event.inputs.freezer_release_tag }}
+          INPUT_TOMBSTONE_RELEASE_TAG: ${{ github.event.inputs.tombstone_release_tag }}
           INPUT_RELEASE_NOTES: ${{ github.event.inputs.release_notes }}
         run: |
           set -euo pipefail
@@ -78,14 +78,14 @@ jobs:
             fi
           done
 
-          default_release_tag="慕容调度"
-          release_tag="${INPUT_RELEASE_TAG:-$default_release_tag}"
-          release_name="${INPUT_RELEASE_NAME:-}"
+          default_freezer_release_tag="ColorOS15淦残温控并仅挂载freezerV2(frozen)"
+          default_tombstone_release_tag="ColorOS15移除温控并开启ColorOS墓碑完全体"
+          freezer_release_tag="${INPUT_FREEZER_RELEASE_TAG:-$default_freezer_release_tag}"
+          tombstone_release_tag="${INPUT_TOMBSTONE_RELEASE_TAG:-$default_tombstone_release_tag}"
           freezer_zip="murongruyan-freezerV2-${freezer_version}.zip"
           tombstone_zip="murongruyan-tombstone-${tombstone_version}.zip"
           raw_base_url="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${GITHUB_REF_NAME}"
           release_notes_file="${RUNNER_TEMP}/murong-modules-release-notes.txt"
-          omit_name_during_update="true"
           omit_body_during_update="true"
 
           if [[ -n "${INPUT_RELEASE_NOTES:-}" ]]; then
@@ -95,22 +95,17 @@ jobs:
             : > "${release_notes_file}"
           fi
 
-          if [[ -n "${INPUT_RELEASE_NAME:-}" ]]; then
-            omit_name_during_update="false"
-          fi
-
           {
             echo "FREEZER_VERSION=${freezer_version}"
             echo "FREEZER_VERSION_CODE=${freezer_version_code}"
             echo "TOMBSTONE_VERSION=${tombstone_version}"
             echo "TOMBSTONE_VERSION_CODE=${tombstone_version_code}"
-            echo "RELEASE_TAG=${release_tag}"
-            echo "RELEASE_NAME=${release_name}"
+            echo "FREEZER_RELEASE_TAG=${freezer_release_tag}"
+            echo "TOMBSTONE_RELEASE_TAG=${tombstone_release_tag}"
             echo "FREEZER_ZIP=${freezer_zip}"
             echo "TOMBSTONE_ZIP=${tombstone_zip}"
             echo "RAW_BASE_URL=${raw_base_url}"
             echo "RELEASE_NOTES_FILE=${release_notes_file}"
-            echo "OMIT_NAME_DURING_UPDATE=${omit_name_during_update}"
             echo "OMIT_BODY_DURING_UPDATE=${omit_body_during_update}"
           } >> "${GITHUB_ENV}"
 
@@ -134,6 +129,7 @@ jobs:
                   "version_code": int(os.environ["FREEZER_VERSION_CODE"]),
                   "update_json": Path("update.json"),
                   "zip_name": os.environ["FREEZER_ZIP"],
+                  "release_tag": os.environ["FREEZER_RELEASE_TAG"],
               },
               {
                   "prop": Path("ColorOS移除温控并开启ColorOS墓碑完全体/module.prop"),
@@ -141,12 +137,12 @@ jobs:
                   "version_code": int(os.environ["TOMBSTONE_VERSION_CODE"]),
                   "update_json": Path("update1.json"),
                   "zip_name": os.environ["TOMBSTONE_ZIP"],
+                  "release_tag": os.environ["TOMBSTONE_RELEASE_TAG"],
               },
           ]
 
           raw_base_url = os.environ["RAW_BASE_URL"]
           repo = os.environ["GITHUB_REPOSITORY"]
-          release_tag = os.environ["RELEASE_TAG"]
           changelog_notes = os.environ.get("INPUT_CHANGELOG_NOTES", "").strip()
 
           for item in modules:
@@ -164,7 +160,7 @@ jobs:
               payload = {
                   "version": item["version"],
                   "versionCode": item["version_code"],
-                  "zipUrl": f"https://github.com/{repo}/releases/download/{release_tag}/{item['zip_name']}",
+                  "zipUrl": f"https://github.com/{repo}/releases/download/{item['release_tag']}/{item['zip_name']}",
                   "changelog": f"{raw_base_url}/changelog.txt",
               }
               item["update_json"].write_text(
@@ -328,11 +324,11 @@ jobs:
         shell: bash
         run: echo "RELEASE_COMMIT_SHA=$(git rev-parse HEAD)" >> "${GITHUB_ENV}"
 
-      - name: Ensure Existing Release
+      - name: Ensure Existing Freezer Release
         if: github.event_name == 'workflow_dispatch'
         uses: actions/github-script@v7
         env:
-          RELEASE_TAG: ${{ env.RELEASE_TAG }}
+          RELEASE_TAG: ${{ env.FREEZER_RELEASE_TAG }}
         with:
           script: |
             const { owner, repo } = context.repo;
@@ -352,18 +348,56 @@ jobs:
               throw error;
             }
 
-      - name: Publish GitHub Release
+      - name: Ensure Existing Tombstone Release
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/github-script@v7
+        env:
+          RELEASE_TAG: ${{ env.TOMBSTONE_RELEASE_TAG }}
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const tag = process.env.RELEASE_TAG;
+
+            try {
+              const release = await github.rest.repos.getReleaseByTag({
+                owner,
+                repo,
+                tag,
+              });
+              core.info(`Found existing release #${release.data.id} for tag ${tag}`);
+            } catch (error) {
+              if (error.status === 404) {
+                throw new Error(`Release tag "${tag}" does not exist. This workflow only updates an existing release.`);
+              }
+              throw error;
+            }
+
+      - name: Publish Freezer Release
         if: github.event_name == 'workflow_dispatch'
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
           artifactErrorsFailBuild: true
-          artifacts: dist/${{ env.FREEZER_ZIP }},dist/${{ env.TOMBSTONE_ZIP }}
+          artifacts: dist/${{ env.FREEZER_ZIP }}
           bodyFile: ${{ env.RELEASE_NOTES_FILE }}
           commit: ${{ env.RELEASE_COMMIT_SHA }}
           makeLatest: true
-          name: ${{ env.RELEASE_NAME }}
           omitBodyDuringUpdate: ${{ env.OMIT_BODY_DURING_UPDATE }}
-          omitNameDuringUpdate: ${{ env.OMIT_NAME_DURING_UPDATE }}
+          omitNameDuringUpdate: true
           replacesArtifacts: true
-          tag: ${{ env.RELEASE_TAG }}
+          tag: ${{ env.FREEZER_RELEASE_TAG }}
+
+      - name: Publish Tombstone Release
+        if: github.event_name == 'workflow_dispatch'
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          artifactErrorsFailBuild: true
+          artifacts: dist/${{ env.TOMBSTONE_ZIP }}
+          bodyFile: ${{ env.RELEASE_NOTES_FILE }}
+          commit: ${{ env.RELEASE_COMMIT_SHA }}
+          makeLatest: true
+          omitBodyDuringUpdate: ${{ env.OMIT_BODY_DURING_UPDATE }}
+          omitNameDuringUpdate: true
+          replacesArtifacts: true
+          tag: ${{ env.TOMBSTONE_RELEASE_TAG }}

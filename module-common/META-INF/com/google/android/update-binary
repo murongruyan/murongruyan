@@ -1,0 +1,46 @@
+#!/sbin/sh
+
+#################
+# Initialization
+#################
+
+umask 022
+
+# echo before loading util_functions
+ui_print() { echo "$1"; }
+
+require_new_magisk() {
+  ui_print "*******************************"
+  ui_print " Please install Magisk v19.0+! "
+  ui_print "*******************************"
+  exit 1
+}
+
+#########################
+# Load util_functions.sh
+#########################
+
+OUTFD=$2
+ZIPFILE=$3
+
+mount /data 2>/dev/null
+
+[ -f /data/adb/magisk/util_functions.sh ] || require_new_magisk
+. /data/adb/magisk/util_functions.sh
+[ $MAGISK_VER_CODE -lt 19000 ] && require_new_magisk
+
+if [ $MAGISK_VER_CODE -ge 20400 ]; then
+  # New Magisk have complete installation logic within util_functions.sh
+  install_module
+  exit 0
+fi
+
+#################
+# Legacy Support
+#################
+
+setup_flashable
+mount_partitions
+api_level_arch_detect
+install_module
+exit 0

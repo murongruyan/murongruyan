@@ -1,0 +1,9 @@
+# This file will be read by resetprop
+# 示例: 更改 dpi
+# ro.sf.lcd_density=410
+# vendor.display.lcd_density=410
+# Disallow framepacing in favor of FAS algorithms
+persist.sys.environment.temp=500
+oplus.dex.tempcontrol=false
+persist.sys.oplus.wifi.sla.game_high_temperature=50
+ro.oplus.audio.thermal_control=false

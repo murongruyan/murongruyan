@@ -1,0 +1,1068 @@
+<?xml version="1.0" encoding="utf-8"?>
+<filter-conf>
+    <version>2025071000</version>
+    <filter-name>sys_elsa_config_list</filter-name>
+    <isHansConfig>true</isHansConfig>
+    <!-- OFreezer3.5 -->
+    <module-version>OFreezer3.0</module-version>
+
+    <enableConfig hansEnable="true" gmsEnable="true" releaseStatistic="true" skipToast="true" heatGameCloseNet="false"
+                    dozeRestrictSwitch="true" audioByHook="true" navigationByHook="true" audioCheckEnable="true" proxyWakeLockEnable="true"
+                    cgp_v2="true" hansWatchDogEnable="true" cpnCheckByHook="true" restoreAlarm="true" uidGoneRemoveAlarm="true"
+                    MStateTrimMemConfig = "true"/>
+    <lcdOffConfig ffTotal="6" ffInterval="10000" interval="60000" deepSleepFreezeWhite="true" gameCloseNet="false" idleEnable="true"/>
+    <lcdOnConfig RToM="20000" MToF="10000" checkImportance="15000" gameCloseNet="false" />
+    <abKillConfig enable="false" queueLength="10"/>
+    <abKillConfig-LcdOn level="1" interval="300000" freq="15"/>
+    <abKillConfig-LcdOn level="2" interval="300000" freq="21"/>
+    <abKillConfig-LcdOff level="1" interval="300000" freq="9"/>
+    <abKillConfig-LcdOff level="2" interval="300000" freq="15"/>
+    <trafficConfig enable= "true" interval="10000" speed="8" trafficUnfreezeTime="120000"/>
+    <proxyConfig alarm="true" serivce="true" job="true" broadcast="true" proxyBCmax="60"/>
+    <powerSaveConfig enable="true" repeatTime="300000"/>
+    <historyStorageConfig enable="true" filesNumber="6"/>
+    <traceConfig enable="true"/>
+    <ApiTimeoutConfig apiEnable="true" upperTimeout="7200000" floorTimeout="600000"/>
+    <hansWatchDogConfig defaultTimeout="40000"/>
+    <nightDeepDozeConfig enable="true" deltaMinutes="20" timeRestrictEnable="true" startMinutes="0" endMinutes="360" />
+    <queryUsageStatsConfig queryIntervalTime="259200" messageDelayTime="3600" messageRepeateCount="5"/> <!--3days:259200-->
+    <proxyDelayConfig delayTime="500" />
+
+    <!-- fast freezer config -->
+    <ffConfig enable="true" enterTimeout="80" interval="8000" maxFzNum="15"/>
+    <ffTimeout pkg="*" ffTimeout="1200"/>
+    <ffTimeout pkg="com.oppo.camera" ffTimeout="3000" hotEnable="true" skipImptFlag="6000" />
+    <ffTimeout pkg="com.oplus.camera" ffTimeout="3000" hotEnable="true" skipImptFlag="6000" />
+    <ffTimeout pkg="com.coloros.gallery3d" ffTimeout="3000" hotEnable="true"/>
+    <!-- fast freezer white={access list} black={skip fastfreeze} -->
+    <!--ffPkg type="white" pkg="" /-->
+    <ffPkg type="white" pkg="com.coloros.ocrscanner" />
+    <ffPkg type="black" pkg="android" />
+    <ffPkg type="black" pkg="com.android.settings" />
+    <ffPkg type="black" pkg="com.android.systemui" />
+    <ffPkg type="black" pkg="com.google.android.packageinstaller" />
+    <ffPkg type="black" pkg="com.android.launcher" />
+    <ffPkg type="skipAppSwitch" pkg="com.android.permissioncontroller" />
+    <ffPkg type="skipAppSwitch" pkg="com.google.android.permissioncontroller" />
+
+    <requestFF>
+        <info caller="com.oplus.camera" ffInterval="10000-7000-5000" ffTimeout="3000-2000-1200"/>
+    </requestFF>
+
+    <imPkg pkg="com.tencent.mm"/>
+
+    <!-- pkg list, name={pkgName}, category={forcewhite, oppo/oneplus white, third white}-->
+    <whitePkg name="com.coloros.soundrecorder" category="100"/>
+    <whitePkg name="com.hiby.music" category="100"/>
+    <whitePkg name="com.kugou.viper" category="100"/>
+    <whitePkg name="com.kiloo.subwaysurf" category="100"/>
+    <whitePkg name="com.oplus.cameradetection" category="100" />
+    <whitePkg name="com.coloros.alarmclock" category="100" />
+    <whitePkg name="com.google.android.apps.tycho" category="100" />
+    <whitePkg name="com.tmobile.pr.mytmobile" category="100"/>
+    <whitePkg name="com.vzw.hss.myverizon" category="100"/>
+    <whitePkg name="com.unionpay.tsmservice" category="100" />
+    <whitePkg name="com.android.tback" category="100" />
+    <whitePkg name="com.nirenr.talkman" category="100" />
+    <whitePkg name="com.dianming.phoneapp" category="100" />
+    <whitePkg name="com.bjbyhd.voiceback" category="100" />
+
+    <!-- oppo white app-->
+
+    <!--realme app -->
+
+    <!--oneplus white app -->
+
+    <!--third white app -->
+    
+    <!--blacklist app of export region is controlled according to 3rd app of domestic region-->
+    <blackHansPkg enable="false" pkg="" />
+
+    <!-- oppo system black app name={pkgname} scene={extremeFg,charging,lcdon,lcdoff,night}
+            mask=proxy broadcast, close_socket, aysnbinder, alarm, sync, job, broadcast, provider, bindservice, startservice, activity-->
+    <SysBlack name="com.heytap.browser" version = "8140900" scene="0111" mask="10100000000"/>
+    <SysBlack name="com.android.wallpaper.livepicker" version = "1300" scene="0011" mask="10100000000"/>
+    <SysBlack name="com.coloros.oshare" version = "140000" scene="0011" mask="10100000000"/>
+    <SysBlack name="com.oplus.omoji" version = "140000" scene="0111" mask="10100000000"/>
+    <SysBlack name="com.coloros.sharescreen" version = "13001003" scene="0011" mask="10100000000"/>
+    <SysBlack name="com.heytap.colorfulengine" version = "13000033" scene="0011" mask="10100000000"/>
+    <SysBlack name="com.oplus.aiunit" version = "1303002" scene="0011" mask="10100000000"/>
+    <SysBlack name="com.oplus.dmp" version = "13000044" scene="0011" mask="10100000000"/>
+    <SysBlack name="com.heytap.market" version = "0" scene="0001" mask="10100000000"/>
+    <!-- add for OS14.1.0-->
+    <SysBlack name="com.heytap.mydevices" version = "0" scene="0001" mask="10100000000"/>
+    <SysBlack name="com.oplus.eyeprotect" version = "0" scene="0111" mask="10100000000"/>
+    <SysBlack name="com.coloros.karaoke" version = "0" scene="0011" mask="10100000000"/>
+    <SysBlack name="com.oplus.encryption" version = "0" scene="0011" mask="10100000000"/>
+    <SysBlack name="com.coloros.smartlock" version = "0" scene="0001" mask="10100000000"/>
+    <SysBlack name="com.coloros.accessibilityassistant" version = "0" scene="0011" mask="10100000000"/>
+    <SysBlack name="com.oplus.wallpapers" version = "0" scene="0011" mask="10100000000"/>
+    <SysBlack name="com.coloros.systemclone" version = "0" scene="0111" mask="10100000000"/>
+    <SysBlack name="com.coloros.assistantscreen" version = "0" scene="0011" mask="10100000000"/>
+    <SysBlack name="com.coloros.weather.service" version = "0" scene="0111" mask="10100000000"/>
+    <SysBlack name="com.coloros.smartsidebar" version = "0" scene="0011" mask="10100000000"/>
+    <SysBlack name="com.coloros.translate.engine" version = "0" scene="0011" mask="10100000000"/>
+    <SysBlack name="com.coloros.floatassistant" version = "0" scene="0011" mask="10100000000"/>
+    <SysBlack name="com.oplus.hamlet" version = "0" scene="0111" mask="10100000000"/>
+    <SysBlack name="com.coloros.relax" version = "0" scene="0111" mask="10100000000"/>
+    <SysBlack name="com.coloros.musiclink" version = "0" scene="0111" mask="10100000000"/>
+    <SysBlack name="com.oplus.viewtalk" version = "0" scene="0111" mask="10100000000"/>
+    <SysBlack name="com.oplus.operationManual" version = "0" scene="0111" mask="10100000000"/>
+    <SysBlack name="com.coloros.ocrscanner" version = "0" scene="0111" mask="10100000000"/>
+    <SysBlack name="com.heytap.ocsp.client" version = "0" scene="0111" mask="10100000000"/>
+
+    <SysBlack name="com.heytap.quicksearchbox" version = "0" scene="0001" mask="10100000000"/>
+    <SysBlack name="com.heytap.pictorial" version = "0" scene="0001" mask="10100000000"/>
+    <SysBlack name="com.coloros.gallery3d" version = "0" scene="0001" mask="10100000000"/>
+    <SysBlack name="com.coloros.codebook" version = "0" scene="0001" mask="10100000000"/>
+    <SysBlack name="com.coloros.phonemanager" version = "0" scene="0001" mask="10100000000"/>
+    <SysBlack name="com.coloros.securityguard" version = "0" scene="0001" mask="10100000000"/>
+    <SysBlack name="com.oplus.safecenter" version = "0" scene="0001" mask="10100000000"/>
+    <SysBlack name="com.coloros.childrenspace" version = "0" scene="0001" mask="10100000000"/>
+    <SysBlack name="com.oplus.screenshot" version = "0" scene="0001" mask="10100000000"/>
+    <SysBlack name="com.coloros.sceneservice" version = "0" scene="0001" mask="10100000000"/>
+    <SysBlack name="com.coloros.activation" version = "0" scene="0001" mask="10100000000"/>
+
+    <!-- add for kill app config after the app is frozen for 30 minutes, interval="10000" pkg="com.test1#com.test2" apptype="1#2"-->
+    <killFrozenConfig pkg="cmb.pb"/>
+
+    <!-- add for OS14.1.0 deep sleep proxy sys app alarm-->
+    <SysProxy name ="com.oplus.ocar" actions="oplus.intent.action.OCAR_PROCESS_QUIT" />
+    <SysProxy name ="android" actions="CameraMonitor#WriteBufferAlarm#com.android.server.audio.action.CHECK_MUSIC_ACTIVE" />
+    <SysProxy name ="com.oplus.metis" actions="*" />
+    <SysProxy name ="com.android.networkstack" actions="*" />
+    <SysProxy name ="com.mobiletools.systemhelper" actions="*" />
+    <SysProxy name ="com.oppo.ctautoregist" actions="*" />
+
+    <!-- gray app name={pkgname} scene={minSystem, thermal_mid, thermal_low, fastFreeze, extremeFg, charging, lcdon, lcdoff, night}
+            allow mask=gps, proxy broadcast, close_socket; aysnbinder, alarm, sync, job, broadcast; provider, bindservice, startservice, activity-->
+    <SysBlackPolicy>
+        <policy name="lcdon"        scene="100110111" mask="010100000000" quota="0" bgMode="0" fgsExempt="false"/>
+        <policy name="lcdoff"       scene="100000011" mask="010100000000" quota="0" bgMode="0" fgsExempt="false"/>
+        <policy name="lcdoffSkipMS" scene=       "11" mask="010100000000" quota="0" bgMode="0" fgsExempt="false"/>
+        <policy name="night"        scene="100000001" mask="111111100000" quota="0" bgMode="0" fgsExempt="false"/>
+        <policy name="nightSkipMS"  scene=        "1" mask="111111100000" quota="0" bgMode="0" fgsExempt="false"/>
+    </SysBlackPolicy>
+
+    <SysBlackRestrictMask>
+        <policy name="night"              scene="1"           mask="111111100000"/>
+        <policy name="lcdoff"             scene="10"          mask="011100000000"/>
+        <policy name="lcdon"              scene="100"         mask="011100000000"/>
+        <policy name="charging"           scene="1000"        mask="010100000000"/>
+        <policy name="extremeFg"          scene="10000"       mask="010100000000"/>
+        <policy name="fastFreeze"         scene="100000"      mask="010100000000"/>
+        <policy name="minSystem"          scene="100000000"   mask="111111100000"/>
+    </SysBlackRestrictMask>
+
+    <SysBlackApp inherit="lcdon" name="com.heytap.browser" minVer="8140900" maxVer="" quota="400000" bgMode="257">
+        <broadcast excludeAction="com.oppo.usercenter.account_logout#oppo.intent.action.usercenter.ACCOUNT_LOGOUT#android.intent.action.BOOT_COMPLETED#android.net.conn.CONNECTIVITY_CHANGE#oppo.intent.action.PACKAGE_ADDED#oppo.intent.action.PACKAGE_REMOVED#oplus.intent.action.PACKAGE_ADDED#oplus.intent.action.PACKAGE_REMOVED#android.intent.action.PACKAGE_ADDED#android.intent.action.PACKAGE_REMOVED#android.intent.action.PACKAGE_REPLACED#android.intent.action.DOWNLOAD_COMPLETE#com.heytap.browser.action.PRE_LAUNCH#android.appwidget.action.APPWIDGET_UPDATE#com.hpplay.sdk.source.LelinkSdkService.ACTION"/>
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.heytap.market" minVer="0" maxVer="" quota="500000" bgMode="257">
+        <broadcast excludeAction="android.intent.action.SCREEN_OFF#android.intent.action.PACKAGE_ADDED#android.intent.action.PACKAGE_REMOVED#android.intent.action.PACKAGE_REPLACED#android.net.conn.CONNECTIVITY_CHANGE#android.net.wifi.STATE_CHANGE" />
+        <net forceProxy="true" />
+        <gps forceProxy="true" />
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.coloros.backuprestore" minVer="" maxVer="" quota="0" bgMode="64">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.android.wallpaper.livepicker" minVer="1300" maxVer="" quota="300000" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoffSkipMS" name="com.coloros.oshare" minVer="140000" maxVer="">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.heytap.colorfulengine" minVer="13000033" maxVer="" quota="300000" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.oplus.aiunit" minVer="1303002" maxVer="" quota="500000" bgMode="257">
+        <broadcast excludeAction="oplus.intent.action.BOOT_COMPLETED#android.intent.action.BOOT_COMPLETED#android.intent.action.ACTION_POWER_CONNECTED" />
+    </SysBlackApp>
+    <SysBlackApp inherit="nightSkipMS" name="com.oplus.metis" minVer="" maxVer="" quota="500000" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="night" name="com.oplus.deepthinker" minVer="" maxVer="" quota="400000" bgMode="256">
+    </SysBlackApp>
+    <SysBlackApp inherit="nightSkipMS" name="com.oplus.pantanal.ums" minVer="" maxVer="" quota="150000" bgMode="">
+    </SysBlackApp>
+    <SysBlackApp inherit="night" name="com.oplus.dmp" minVer="13000044" maxVer="" quota="60000" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.oplus.travelengine" minVer="" maxVer="" quota="0" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoffSkipMS" name="com.heytap.opluscarlink" minVer="" maxVer="" quota="60000" bgMode="32">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.oplus.remotecontrol" minVer="" maxVer="" quota="0" bgMode="32">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.oplus.vdc" minVer="" maxVer="" quota="60000" bgMode="32">
+        <broadcast excludeAction="com.heytap.accessory.action.SERVICE_CONNECTION_REQUESTED#android.media.action.MICROPHONE_MUTE_CHANGED#android.media.VOLUME_CHANGED_ACTION#android.media.action.SPEAKERPHONE_STATE_CHANGED#android.intent.action.PHONE_STATE#android.bluetooth.headset.profile.action.AUDIO_STATE_CHANGED"/>
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.coloros.phonemanager" minVer="0" maxVer="" quota="300000" bgMode="256">
+        <broadcast excludeAction="com.coloros.phonemanager.clear.extra.OplusExtraCleanUpReceiver#com.oppo.cleandroid.ui.OPPO_SAFE_CENTER_CLEAN_UP#oplus.intent.action.EXTRA_CLEAN_UP#com.coloros.phonemanager.voicecallnc.AppStatusChangeReceiver#oppo.intent.action.PACKAGE_REMOVED#oplus.intent.action.PACKAGE_REMOVED#oppo.intent.action.PACKAGE_ADDED#oplus.intent.action.PACKAGE_ADDED#com.coloros.phonemanager.virusdetect.receiver.RealTimeMonitorReceiver#oplus.intent.market.PACKAGE_ADDED_INCREMENTAL#com.coloros.phonemanager.idleoptimize.IdleTimeChangeReceiver#android.intent.action.TIMEZONE_CHANGED#oplus.intent.action.DATE_CHANGED#android.intent.action.TIME_SET#oppo.intent.action.BOOT_COMPLETED#oplus.intent.action.BOOT_COMPLETED#com.coloros.phonemanager.settings.LocaleChangeReceiver#android.intent.action.LOCALE_CHANGED#com.coloros.phonemanager.clear.extra.OplusExtraCleanUpReceiver#com.oppo.cleandroid.ui.OPPO_SAFE_CENTER_CLEAN_UP#oplus.intent.action.EXTRA_CLEAN_UP" />
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.coloros.codebook" minVer="0" maxVer="" quota="200000" bgMode="1">
+        <broadcast excludeAction="android.intent.action.SCREEN_OFF#android.intent.action.PACKAGE_ADDED#android.intent.action.PACKAGE_REMOVED"/>
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.oplus.encryption" minVer="0" maxVer="" quota="150000" bgMode="1">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.oplus.aimemory" minVer="0" maxVer="" quota="600000" bgMode="0">
+        <broadcast excludeAction="android.intent.action.PACKAGE_DATA_CLEARED"/>
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.coloros.securepay" minVer="0" maxVer="" quota="0" bgMode="1">
+        <broadcast excludeAction="android.intent.action.DATE_CHANGED#com.oppo.safe.action.VIRUS_FOUND#oppo.intent.action.BOOT_COMPLETED#oplus.intent.action.BOOT_COMPLETED"/>
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.coloros.securityguard" minVer="0" maxVer="" quota="60000" bgMode="0">
+        <broadcast excludeAction="com.coloros.security.BROADCAST_SECURITY"/>
+    </SysBlackApp>
+    <SysBlackApp inherit="night" name="com.coloros.smartlock" minVer="0" maxVer="" quota="60000" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.coloros.karaoke" minVer="0" maxVer="" quota="60000" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.heytap.health" minVer="0" maxVer="" quota="340000" bgMode="268">
+        <broadcast excludeAction="com.heytap.health.operation.business.alarm.RemindAlarmManager$AlarmeReceiver#com.heytap.health.operation.medalv2.MedalNotificationReceiver#android.bluetooth.device.action.ACL_CONNECTED#android.bluetooth.headset.profile.action.CONNECTION_STATE_CHANGED"/>
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.coloros.healthcheck" minVer="0" maxVer="" quota="0" bgMode="1">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoffSkipMS" name="com.oplus.cosa" minVer="0" maxVer="" quota="250000" bgMode="1">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.oplus.omoji" minVer="140000" maxVer="" quota="10000" bgMode="1">
+        <broadcast excludeAction="com.heytap.usercenter.account_logout#com.oppo.usercenter.account_logout#oppo.intent.action.usercenter.ACCOUNT_LOGOUT"/>
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.coloros.translate.engine" minVer="0" maxVer="" quota="300000" bgMode="388">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff"  name="com.coloros.smartsidebar" minVer="0" maxVer="" quota="300000" bgMode="1">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon"  name="com.coloros.colordirectservice" minVer="0" maxVer="" quota="0" bgMode="256">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.coloros.gallery3d" minVer="0" maxVer="" quota="150000" bgMode="257">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.coloros.directui" minVer="0" maxVer="" quota="0" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.coloros.ocrscanner" minVer="0" maxVer="" >
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.coloros.floatassistant" minVer="0" maxVer="" quota="60000" bgMode="0">
+        <binder>
+            <asyncBinderInfo name="android.view.IOplusWindowStateObserver" method ="TRANSACTION_onWindowStateChange" extName=""/>
+        </binder>
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.coloros.accessibilityassistant" minVer="0" maxVer="" quota="60000" bgMode="0">
+        <broadcast excludeAction="action.com.coloros.accessibilityassistant.selfprotectstage#android.intent.action.SCREEN_ON#android.intent.action.SCREEN_OFF#android.intent.action.PACKAGE_ADDED#android.intent.action.PACKAGE_REPLACED#android.intent.action.PACKAGE_REMOVED#android.intent.action.CLOSE_SYSTEM_DIALOGS#oplus.intent.action.DEEPTHINKER_EVENTFOUNTAIN_STARTUP#android.intent.action.CONFIGURATION_CHANGED#oplus.intent.action.PRIVACY_POLICY_COMPLETE"/>
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.coloros.digitalwellbeing" minVer="0" maxVer="" quota="60000" bgMode="0">
+        <broadcast excludeAction="oplus.intent.action.BROADCAST_SERVER_INSTRUCTION#oplus.intent.action.FAMILY_GUARD_INSTRUCTION_STATUS#com.oplus.intelligent.rulesengine.REQUEST_DATA"/>
+    </SysBlackApp>
+    <SysBlackApp inherit="night" name="com.android.email" minVer="0" maxVer="" quota="0" bgMode="1">
+        <broadcast excludeAction="com.android.email.service.EmailBootReceiver" />
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.oplus.owork" minVer="0" maxVer="" quota="60000" bgMode="1">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.coloros.sharescreen" minVer="13001003" maxVer="" >
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.nearme.instant.platform" minVer="0" maxVer="" quota="0" bgMode="1">
+        <net forceProxy="true" />
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.oppo.instant.local.service" minVer="0" maxVer="" quota="0" bgMode="1">
+        <net forceProxy="true" />
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.coloros.video" minVer="0" maxVer="" quota="0" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.coloros.childrenspace" minVer="0" maxVer="" quota="60000" bgMode="">
+    </SysBlackApp>
+<!--    <SysBlackApp inherit="lcdon" name="com.heytap.cloud" minVer="0" maxVer="" quota="0" bgMode="257">-->
+<!--        <broadcast excludeAction="oppo.intent.action.ACTIVATE_STATISTICS#oplus.intent.action.ACTIVATE_STATISTICS#com.heytap.cloud.yes.open.switch#com.heytap.cloud.action.DATA_CHANGED#heytap.intent.action.gallery3d.FACE_CLUSTER_REQUEST_TRIGGER#heytap.intent.action.gallery3d.FACE_CLUSTER_RESULT_TRIGGER#com.heytap.cloud.action.UPDATE_SCENE_OCR_DATA#com.heytap.cloud.action.UPDATE_DICTIONARY_DATA#android.intent.action.PACKAGE_REMOVED#android.intent.action.PACKAGE_DATA_CLEARED#android.intent.action.PACKAGE_ADDED#com.heytap.cloud.action.BIND_SERVICE#com.heytap.usercenter.account_logout#com.usercenter.action.receiver.account_login#com.onplus.account.oplus.login.broadcast#oppo.intent.action.usercenter.ACCOUNT_LOGIN#androidx.work.diagnostics.REQUEST_DIAGNOSTICS" />-->
+<!--    </SysBlackApp>-->
+    <SysBlackApp inherit="lcdon" name="com.oplus.appdetail" minVer="0" maxVer="" quota="120000" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.heytap.openid" minVer="0" maxVer="" quota="0" bgMode="0">
+        <broadcat excludeAction="oplus.intent.action.MULTI_APP_PACKAGE_REMOVED#android.intent.action.PACKAGE_DATA_CLEARED#oplus.intent.action.PACKAGE_REMOVED" />
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.oplus.stdsp" minVer="0" maxVer="" quota="60000" bgMode="1">
+        <broadcast excludeAction="com.onplus.account.oplus.login.broadcast#oplus.intent.action.VIRUS_FOUND#com.oppo.usercenter.account_logout#oppo.intent.action.usercenter.ACCOUNT_LOGOUT" />
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.opos.ads" minVer="0" maxVer="" quota="60000" bgMode="0">
+        <broadcast excludeAction="com.opos.ads.action_report" />
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.oplus.pay" minVer="0" maxVer="" quota="60000" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoffSkipMS" name="com.oplus.securitykeyboard" minVer="0" maxVer="" quota="0" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.oplus.uxdesign" minVer="0" maxVer="" quota="0" bgMode="0">
+        <broadcast excludeAction="com.oplus.uxCenter.DOWNLOAD_STATUS#com.oplusos.sau.DATARES_UPDATE#com.oplus.engineermode.EngineerModeMain#android.intent.action.BOOT_COMPLETED" />
+        <binder>
+            <asyncBinderInfo name="com.oplus.theme.IApplyManager" method ="*" extName=""/>
+        </binder>
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.oplus.multiapp" minVer="0" maxVer="" quota="0" bgMode="0">
+        <broadcast excludeAction="oplus.intent.action.ROM_UPDATE_CONFIG_SUCCESS" />
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.oplus.portrait" minVer="0" maxVer="" quota="0" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.oplus.apprecover" minVer="0" maxVer="" quota="0" bgMode="0">
+        <broadcast excludeAction="oppo.intent.action.PACKAGE_ADDED#oppo.intent.action.PACKAGE_REMOVED#android.intent.action.PACKAGE_ADDED#android.intent.action.PACKAGE_REMOVED" />
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.oplus.bracketspace" minVer="0" maxVer="" quota="0" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.oplus.pscanvas" minVer="0" maxVer="" quota="0" bgMode="0">
+        <broadcast excludeAction="oppo.intent.action.PACKAGE_ADDED#oppo.intent.action.PACKAGE_REMOVED#android.intent.action.PACKAGE_ADDED#android.intent.action.PACKAGE_REMOVED" />
+    </SysBlackApp>
+    <SysBlackApp inherit="nightSkipMS" name="com.coloros.activation" minVer="0" maxVer="" quota="0" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.oplus.hamlet" minVer="0" maxVer="">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.coloros.relax" minVer="0" maxVer="">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.coloros.musiclink" minVer="0" maxVer="">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.oplus.viewtalk" minVer="0" maxVer="">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.oplus.operationManual" minVer="0" maxVer="" >
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.coloros.weather.service" minVer="0" maxVer="" quota="100000" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.coloros.weather2" minVer="0" maxVer="" quota="120000" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="night" name="com.heytap.mydevices" minVer="0" maxVer="" quota="0" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.oplus.eyeprotect" minVer="0" maxVer="" quota="2880000" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.oplus.wallpapers" minVer="0" maxVer="" quota="60000" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.coloros.systemclone" minVer="0" maxVer="">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.coloros.assistantscreen" minVer="0" maxVer="" quota="200000" bgMode="0">
+        <broadcast excludeAction="com.oplus.plugin.configuration.receiver.SeedingBroadcastReceiver#android.intent.action.PACKAGE_ADDED#android.intent.action.PACKAGE_REMOVED#android.intent.action.PACKAGE_CHANGED#android.intent.action.PACKAGE_REPLACED#android.intent.action.PACKAGE_DATA_CLEARED#android.intent.action.WALLPAPER_CHANGED#android.intent.action.SCREEN_ON#android.intent.action.SCREEN_OFF#android.intent.action.USER_PRESENT#" />
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.heytap.ocsp.client" minVer="0" maxVer="">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.heytap.quicksearchbox" minVer="0" maxVer="" quota="0" bgMode="0">
+        <broadcast excludeAction="oplus.intent.action.PACKAGE_ADDED#oplus.intent.action.PACKAGE_REMOVED#android.intent.action.PACKAGE_ADDED#android.intent.action.PACKAGE_REMOVED#android.intent.action.PACKAGE_REPLACED" />
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoff" name="com.heytap.pictorial" minVer="0" maxVer="" quota="500000" bgMode="1">
+        <broadcast excludeAction="android.intent.action.SCREEN_ON#android.intent.action.SCREEN_OFF#com.usercenter.action.receiver.account_login#com.usercenter.action.receiver.account_logout#com.heytap.mcs.action.RECEIVE_MCS_MESSAGE#com.coloros.bootreg#oplus.intent.action.DEEP_SLEEP_MAINTENCE_RESTORE_NETWORK#resume_or_pause_download_app#ACTION_CLICK_NOTI_REMIND_NOTIFICATION#ACTION_CLICK_BUTTON_REMIND_NOTIFICATION#action_click_remote_views_notification#com.heytap.pictorialaction.DRINK_WATER#com.heytap.pictorial.launch_download_app" />
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdoffSkipMS" name="com.oplus.screenshot" minVer="0" maxVer="" quota="0" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="nightSkipMS" name="com.coloros.sceneservice" minVer="0" maxVer="" quota="200000" bgMode="0">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.redteamobile.roaming" minVer="0" maxVer="" quota="" bgMode="256">
+        <broadcast excludeAction="oplus.intent.action.MCC_CHANGE#android.telephony.action.mcc_change#android.intent.action.BOOT_COMPLETED#android.intent.action.NOTICE_DISMISS#android.intent.action.TIME_SET#com.redteamobile.LOCALE_CHANGED#com.redteamobile.SIM_DISABLE#com.redteamobile.SIM_DISABLE_RESET_STATUS#com.redteamobile.COMMON_BROADCAST#com.redteamobile.SIM_END#com.redteamobile.DEPEND_APP_DISABLED#com.redteamobile.USAGE#com.redteamobile.SIM_STATE_CHANGED#com.redteamobile.UN_USEFUL_ORDER#com.redteamobile.CHANGE_PROFILE#android.net.conn.CONNECTIVITY_CHANGE#android.intent.action.USER_BACKGROUND#oplus.intent.action.ROM_UPDATE_CONFIG_SUCCESS" />
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.finshell.wallet" minVer="" maxVer="" quota="600000" bgMode="256">
+    </SysBlackApp>
+    <SysBlackApp inherit="lcdon" name="com.oplus.matrix" minVer="" maxVer="" quota="300000" bgMode="2">
+    </SysBlackApp>
+    <!-- gms list, name={pkgName} -->
+    <gms name="com.google.android.gms"/>
+    <gms name="com.google.android.gsf"/>
+    <gms name="com.android.vending"/>
+
+    <default-input-pkg name="com.baidu.input_oppo" />
+    <default-input-pkg name="com.sohu.inputmethod.sogouoem" />
+
+    <!-- pkg list name={packagename} category(0x)={
+            heytapAppNetBlack(400000), oplusAppPkgNamePrefix(20000), keepOtherAliveAccess(10000)
+            accessibilityBlack(8000), asyncbinderCallSys(4000), proxySelfService(2000), airplaneWhite(1000),
+            TelephonyRegistryblack(800), syncWhite(400), jobWhite(200), skipFrozenWhite(100),
+            LcdonDisableJobBlack(80), GameCloseNetWhite(40), skipToastWhite(20), disableWakelockWhite(10),
+            proxydisplayManager blackpkg(8), proxyAccessibility blackpkg(4), kill white app(2), net white(1)}-->
+    <pkgConfig category="1" name="com.tencent.mm" />
+    <pkgConfig category="1" name="com.tencent.mobileqq" />
+    <pkgConfig category="1" name="com.wosai.cashbar" />
+    <pkgConfig category="1" name="tl.ghzf.rxwkaycs.com" />
+    <pkgConfig category="2" name="com.aiunit.aon" />
+    <pkgConfig category="20" name="com.oplus.smartmediacontroller"/>
+    <pkgConfig category="200" name="com.oplus.eyeprotect"/>
+    <pkgConfig category="2000" name="com.tencent.qqlive"/>
+    <pkgConfig category="8000" name="com.oplus.autotest.monkey"/>
+    <pkgConfig category="20000" name="com.finshell.#com.oplus.#com.heytap.#com.oppo.#com.realme.#com.color.#com.coloros.#com.nearme."/>
+    <pkgConfig category="40000" name="com.tencent.mobileqq#com.tencent.mm#cn.xuexi.android#com.xtc.watch"/>
+    <pkgConfig category="100000" name="com.heytap.openid#com.oplus.aiunit#com.coloros.calendar" />
+    <pkgConfig category="200000" name="com.oplus.pantanal.ums#com.android.settings.intelligence#com.coloros.assistantscreen" />
+    <pkgConfig category="400000" name="com.heytap.pictorial#com.heytap.health#com.heytap.browser#com.heytap.cloud#com.heytap.themestore#com.heytap.ocsp.client"/>
+
+    <!--appTypeConfig unfreeze special app; key={net, alarm, sync}, type=appType-->
+    <appTypeConfig cpnKey="alarm" appType="3"/>
+    <appTypeConfig cpnKey="net" appType="4"/>
+    <appTypeConfig cpnKey="sync" appType="8"/>
+
+    <!-- alarm white/black  pkg={package, keyPkg, *} action={alarm action} -->
+    <alarm type="white" pkg="clock" action="*"/>
+    <alarm type="white" pkg="alarm" action="*"/>
+    <alarm type="white" pkg="calendar" action="*"/>
+    <alarm type="white" pkg="com.xiasgcfytomgage.MysAlasrm" action="*"/>
+    <alarm type="white" pkg="com.coloros.gallery3d" action="*"/>
+    <!--alarm type="white" pkg="*" action="com.test"/-->
+    <!--alarm type="black" pkg="" action=""/-->
+
+    <!--proxy alarm white pkg={package, *} action={alarm action} -->
+    <!--proxyAlarm type="white" pkg="" action=""/-->
+
+    <!-- manageAlarm type={white, align, proxy, alignAction} -->
+    <!-- pkg={pkg1, *} appType={1#2#*} action={action1, *} -->
+    <manageAlarm type="white" pkg="com.coloros.note" appType="3" /> <!--app_alarm:3-->
+    <manageAlarm type="white" pkg="com.tencent.mm" />
+    <manageAlarm type="align" pkg="com.heytap.health" appType="" />
+    <manageAlarm type="proxy" pkg="" appType="" />
+    <manageAlarm type="alignAction" pkg="" action=""/>
+
+    <!-- activity component calling/called white&black (pkgName+cpnName) -->
+    <!--cpnActivity calling="true" type="white" pkg="" cpn=""/-->
+
+    <!-- service component calling/called white&black (pkgName+cpnName/action) -->
+    <cpnService calling="true" type="white" pkg="com.heytap.mcs" cpn="*" action="*"/>
+    <cpnService calling="true" type="white" pkg="com.android.systemui" cpn="*" action="*"/>
+    <cpnService calling="true" type="white" pkg="com.coloros.assistantscreen" cpn="*" action="*"/>
+    <cpnService calling="true" type="white" pkg="com.oplus.pantanal.ums" cpn="*" action="*"/>
+    <cpnService calling="false" type="white" pkg="com.coloros.filemanager" cpn="*" action="*"/>
+    <cpnService calling="true" type="white" pkg="com.oplus.secondaryhome" cpn="*" action="*"/>
+    <cpnService calling="true" type="white" pkg="com.coloros.sceneservice" cpn="*" action="com.baidu.baidumaps.desktopwidget.walkinfo.ExtGuideService"/>
+    <cpnService calling="true" type="white" pkg="com.coloros.backuprestore" cpn="*" action="com.coloros.br.service"/>
+    <cpnService calling="true" type="white" pkg="com.coloros.backuprestore" cpn="*" action="com.oplus.br.service"/>
+    <cpnService calling="true" type="white" pkg="com.coloros.backuprestore" cpn="*" action="com.heytap.br.service"/>
+    <cpnService calling="true" type="white" pkg="com.oplus.ocar" cpn="*" action="android.media.browse.MediaBrowserService"/>
+    <cpnService calling="false" type="black" pkg="com.google.android.gms" cpn="*" action="com.google.android.gms.safetynet.service.START#com.google.android.gms.ads.identifier.service.START"/>
+    <cpnService calling="false" type="black" pkg="com.google.android.gsf" cpn="*" action="com.google.android.gms.safetynet.service.START#com.google.android.gms.ads.identifier.service.START"/>
+
+    <cpnService calling="false" type="black" pkg="com.google.android.gms" cpn="*" action="com.google.android.chimera.BoundService.START#com.google.android.gms.statementservice.EXECUTE"/>
+    <cpnService calling="false" type="black" pkg="com.google.android.gms" cpn="*" action="com.google.android.gms.usagereporting.service.START#com.google.android.gms.icing.START_STICKY"/>
+    <cpnService calling="false" type="black" pkg="com.google.android.gms" cpn="*" action="com.google.android.gms.measurement.START"/>
+
+    <cpnService calling="false" type="black" pkg="com.google.android.gsf" cpn="*" action="com.google.android.chimera.BoundService.START#com.google.android.gms.statementservice.EXECUTE"/>
+    <cpnService calling="false" type="black" pkg="com.google.android.gsf" cpn="*" action="com.google.android.gms.usagereporting.service.START#com.google.android.gms.icing.START_STICKY"/>
+    <cpnService calling="false" type="black" pkg="com.google.android.gsf" cpn="*" action="com.google.android.gms.measurement.START"/>
+
+    <!-- provider component calling/called white&black (pkgName+cpnName) -->
+    <cpnProvider calling="true" type="white" pkg="com.coloros.oshare" cpn="*"/>
+    <cpnProvider calling="true" type="white" pkg="com.coloros.assistantscreen" cpn="*"/>
+    <cpnProvider calling="true" type="white" pkg="com.oplus.pantanal.ums" cpn="*"/>
+    <cpnProvider calling="true" type="white" pkg="com.android.vending" cpn="com.google.android.gsf.gservices.GservicesProvider"/>
+    <cpnProvider calling="false" type="white" pkg="com.oppo.optvassistant" cpn="com.oneplus.optvassistant.provider.DeviceAppProvider"/>
+    <cpnProvider calling="false" type="white" pkg="com.oplus.aiunit" cpn="com.oplus.aiunit.AIUnitProvider"/>
+    <cpnProvider calling="false" type="white" pkg="com.coloros.calendar" cpn="com.coloros.calendar.app.event.suggest.provider.SuggestEventProvider"/>
+    <cpnProvider calling="false" type="white" pkg="com.coloros.filemanager" cpn="com.oplus.filemanager.provider.FileManagerOpenProvider"/>
+    <cpnProvider calling="false" type="white" pkg="com.google.android.gms" cpn="com.google.android.gms.core.providersettings.GoogleSettingsProvider"/>
+
+    <cpnProvider calling="false" type="black" pkg="com.google.android.gms" cpn="com.google.android.gms.fonts.provider.FontsProvider"/>
+    <cpnProvider calling="false" type="black" pkg="com.google.android.gsf" cpn="com.google.android.gsf.gservices.GservicesProvider"/>
+
+    <!-- broadcast component calling/called white&black (pkgName+action) -->
+    <cpnBroadcast calling="false" type="white" pkg="*" action="android.appwidget.action.APPWIDGET_ENABLED" scene="all"/>
+    <cpnBroadcast calling="false" type="white" pkg="*" action="oppo.intent.action.opluscarlink.INIT_OPLUS_SDK" scene="all"/>
+    <cpnBroadcast calling="false" type="white" pkg="com.coloros.shortcuts" action="coloros.intent.action.POLICY_SCENE" scene="all"/>
+    <cpnBroadcast calling="false" type="white" pkg="com.coloros.shortcuts" action="coloros.intent.action.SCENE_SERVICE_INIT_SUCCESS" scene="all"/>
+    <cpnBroadcast calling="false" type="white" pkg="com.shoujiduoduo.ringtone" action="android.intent.action.ACTION_POWER_CONNECTED" scene="all"/>
+    <cpnBroadcast calling="false" type="white" pkg="com.shoujiduoduo.ringtone" action="android.intent.action.ACTION_POWER_DISCONNECTED" scene="all"/>
+    <cpnBroadcast calling="false" type="white" pkg="com.tencent.mm" action="android.net.conn.CONNECTIVITY_CHANGE" scene="all"/>
+    <cpnBroadcast calling="false" type="white" pkg="com.tencent.mm" action="android.net.wifi.WIFI_STATE_CHANGED" scene="all"/>
+    <cpnBroadcast calling="false" type="white" pkg="com.tencent.mobileqq" action="android.net.conn.CONNECTIVITY_CHANGE" scene="all"/>
+    <cpnBroadcast calling="false" type="white" pkg="com.tencent.mobileqq" action="android.net.wifi.WIFI_STATE_CHANGED" scene="all"/>
+    <cpnBroadcast calling="false" type="white" pkg="com.heytap.themestore" action="android.intent.action.USER_PRESENT" scene="all"/>
+    <cpnBroadcast calling="false" type="white" pkg="com.heytap.themestore" action="android.intent.action.SCREEN_ON" scene="all"/>
+    <cpnBroadcast calling="false" type="white" pkg="com.heytap.themestore" action="android.intent.action.SCREEN_OFF" scene="all"/>
+    <cpnBroadcast calling="true" type="white" pkg="com.android.nfc" action="*" scene="all"/>
+    <cpnBroadcast calling="false" type="white" pkg="com.oplus.melody" action="*" scene="all"/>
+
+    <!-- asyncBinder calling/called white&black (pkgName+name+method) -->
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.media.session.ISessionCallback" method ="TRANSACTION_onMediaButton" scene="all" delayFrz="true" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.media.session.ISessionCallback" method ="TRANSACTION_onMediaButtonFromController" scene="all" delayFrz="true" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.media.session.ISessionCallback" method ="TRANSACTION_onPlay" scene="all" delayFrz="true" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.media.session.ISessionCallback" method ="TRANSACTION_onNext" scene="all" delayFrz="true" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.media.session.ISessionCallback" method ="TRANSACTION_onPrevious" scene="all" delayFrz="true" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.service.controls.IControlsProvider" method ="*" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.speech.tts.ITextToSpeechCallback" method ="*" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="com.heytap.themestore" name="com.oplus.app.IOplusAppSwitchObserver" method ="*" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.bluetooth.IBluetoothGattCallback" method ="TRANSACTION_onClientConnectionState" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.bluetooth.IBluetoothGattCallback" method ="TRANSACTION_onConnectionUpdated" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.bluetooth.IBluetoothGattServerCallback" method ="TRANSACTION_onServerConnectionState" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.bluetooth.IBluetoothGattServerCallback" method ="TRANSACTION_onConnectionUpdated" scene="all" />
+    <!-- if the async binder occur, we fail to prevent the service and broadcast event, so we need to unfreeze the app-->
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.app.IApplicationThread" method ="TRANSACTION_scheduleReceiver" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.app.IApplicationThread" method ="TRANSACTION_oplusScheduleReceiver" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.app.IApplicationThread" method ="TRANSACTION_scheduleRegisteredReceiver" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.app.IApplicationThread" method ="TRANSACTION_scheduleReceiverList" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.app.IApplicationThread" method ="TRANSACTION_scheduleCreateService" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.app.IApplicationThread" method ="TRANSACTION_scheduleServiceArgs" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.app.IApplicationThread" method ="TRANSACTION_scheduleBindService" scene="all" />
+
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.app.IApplicationThread" method ="TRANSACTION_dumpService" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.app.IApplicationThread" method ="TRANSACTION_dumpHeap" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.app.IApplicationThread" method ="TRANSACTION_dumpActivity" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.app.IApplicationThread" method ="TRANSACTION_dumpMemInfo" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.app.IApplicationThread" method ="TRANSACTION_dumpMemInfoProto" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.app.IApplicationThread" method ="SEND_GFX_TRIM" scene="all" extName="android.app.IOplusApplicationThread" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="android.app.IApplicationThread" method ="SCHEDULE_FORCE_GC" scene="all" extName="android.app.IOplusApplicationThread" />
+    <cpnAsyncBinder calling="false" type="white" pkg="com.heytap.opluscarlink" name="android.os.IMessenger" method= "*" scene="all" />
+    <cpnAsyncBinder calling="true"  type="white" pkg="com.heytap.opluscarlink" name="android.os.IMessenger" method ="*" scene="all" />
+    <cpnAsyncBinder calling="true"  type="white" pkg="com.oplus.gesture" name="android.os.IMessenger" method ="*" scene="all" />
+    <cpnAsyncBinder calling="true"  type="white" pkg="com.android.nfc" name="android.os.IMessenger" method ="*" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="com.heytap.browser" name="com.heytap.browser.ILauncherOverlayBrowser" method= "*" scene="all" />
+    <cpnAsyncBinder calling="true"  type="white" pkg="com.android.systemui" name="*" method ="*" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="com.oplus.ipspace" name="com.oplus.app.IOplusAppSwitchObserver" method= "*" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="com.oplus.melody" name="android.bluetooth.le.IOplusRssiDetectCallback" method ="*" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="com.oplus.consumerIRApp" name="android.service.quicksettings.IQSTileService" method ="*" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="com.google.android.gsf#com.google.android.gms" name="android.internal.backup.IBackupTransport" method ="*" scene="all" />
+    <cpnAsyncBinder calling="true"  type="white" pkg="com.edith.os" name="android.os.IMessenger" method ="*" scene="all" />
+    <cpnAsyncBinder calling="true"  type="white" pkg="com.coloros.assistantscreen" name="android.os.IMessenger" method ="*" scene="all" />
+    <cpnAsyncBinder calling="true"  type="white" pkg="*" name="com.android.internal.inputmethod.IInputMethod" method ="*" scene="all" />
+    <cpnAsyncBinder calling="true"  type="white" pkg="*" name="android.app.job.IJobService" method ="TRANSACTION_stopJob" scene="all" />
+    <cpnAsyncBinder calling="false" type="white" pkg="*" name="com.oplus.osense.eventinfo.IOsenseEventCallback" method ="TRANSACTION_onProcessTerminate" scene="all" />
+
+    <cpnAsyncBinder calling="false" type="black" pkg="com.tencent.mobileqq#com.tencent.mm" name="com.android.internal.telephony.IPhoneStateListener" method ="*" scene="all" />
+    <cpnAsyncBinder calling="false" type="black" pkg="com.xunmeng.pinduoduo#com.ss.android.article.lite#com.ss.android.article.video#com.ss.android.ugc.aweme" name="android.media.IAudioPolicyServiceClient" method ="*" scene="all" />
+    <cpnAsyncBinder calling="false" type="black" pkg="com.smile.gifmaker#com.baidu.searchbox#com.autonavi.minimap#com.taobao.taobao#com.UCMobile#com.jifen.qukan" name="android.media.IAudioPolicyServiceClient" method ="*" scene="all" />
+    <cpnAsyncBinder calling="false" type="black" pkg="com.xunmeng.pinduoduo#com.ss.android.article.lite#com.ss.android.article.video#com.ss.android.ugc.aweme" name="android.media.IAudioFlingerClient" method ="*" scene="all" />
+    <cpnAsyncBinder calling="false" type="black" pkg="com.smile.gifmaker#com.baidu.searchbox#com.autonavi.minimap#com.taobao.taobao#com.UCMobile#com.jifen.qukan" name="android.media.IAudioFlingerClient" method ="*" scene="all" />
+    <cpnAsyncBinder calling="false" type="black" pkg="com.xunmeng.pinduoduo#com.ss.android.article.lite#com.ss.android.article.video#com.ss.android.ugc.aweme" name="android.media.IAudioFocusDispatcher" method ="*" scene="all" />
+    <cpnAsyncBinder calling="false" type="black" pkg="com.smile.gifmaker#com.baidu.searchbox#com.autonavi.minimap#com.taobao.taobao#com.UCMobile#com.jifen.qukan" name="android.media.IAudioFocusDispatcher" method ="*" scene="all" />
+    <cpnAsyncBinder calling="false" type="black" pkg="*" name="com.oplus.network.IOlkEventChange" method ="*" scene="all" />
+    <cpnAsyncBinder calling="false" type="black" pkg="com.nearme.gamecenter#com.oplus.games" name="android.os.IMessenger" method ="*" scene="all" />
+    <cpnAsyncBinder calling="false" type="black" pkg="com.eg.android.AlipayGphone" name="com.oplus.network.IOlkInternalCallback" method ="*" scene="all" />
+    <cpnAsyncBinder calling="false" type="black" pkg="com.finshell.#com.oplus.#com.heytap.#com.oppo.#com.realme.#com.color.#com.coloros.#com.nearme." name="android.app.IApplicationThread" method ="TRANSACTION_scheduleTrimMemory" scene="all" />
+    <cpnAsyncBinder calling="false" type="black" pkg="com.finshell.#com.oplus.#com.heytap.#com.oppo.#com.realme.#com.color.#com.coloros.#com.nearme." name="android.app.IApplicationThread" method ="TRANSACTION_clearDnsCache" scene="all" />
+    <cpnAsyncBinder calling="false" type="black" pkg="com.finshell.#com.oplus.#com.heytap.#com.oppo.#com.realme.#com.color.#com.coloros.#com.nearme." name="android.os.IMessenger" method ="TRANSACTION_send" scene="all" />
+    <cpnAsyncBinder-sysCall uid="1047" />
+
+    <defaultProxyBc version="1.0">
+        <item>android.intent.action.ANY_DATA_STATE</item>
+        <item>android.intent.action.TIME_TICK</item>
+        <item>android.intent.action.BATTERY_CHANGED</item>
+        <item>android.intent.action.SCREEN_ON</item>
+        <item>android.intent.action.SCREEN_OFF</item>
+        <item>android.intent.action.SIG_STR</item>
+        <item>android.intent.action.CONFIGURATION_CHANGED</item>
+        <item>android.intent.action.SERVICE_STATE</item>
+        <item>android.intent.action.USER_PRESENT</item>
+        <item>android.intent.action.PACKAGE_RESTARTED</item>
+        <item>android.intent.action.CLOSE_SYSTEM_DIALOGS</item>
+        <item>android.intent.action.PACKAGE_ADDED</item>
+        <item>android.intent.action.PACKAGE_REMOVED</item>
+        <item>android.intent.action.PACKAGE_CHANGED</item>
+        <item>android.intent.action.PACKAGE_REPLACED</item>
+        <item>android.intent.action.PHONE_STATE</item>
+        <item>android.intent.action.SIM_STATE_CHANGED</item>
+        <item>android.intent.action.MEDIA_SCANNER_FINISHED</item>
+        <item>android.intent.action.MEDIA_SCANNER_STARTED</item>
+        <item>android.intent.action.HEADSET_PLUG</item>
+        <item>android.intent.action.ACTION_DSDS_SUB1_OPERATOR_CHANGED</item>
+        <item>android.media.VOLUME_CHANGED_ACTION</item>
+        <item>android.net.conn.CONNECTIVITY_CHANGE</item>
+        <item>android.net.wifi.supplicant.CONNECTION_CHANGE</item>
+        <item>android.net.wifi.supplicant.STATE_CHANGE</item>
+        <item>android.net.wifi.WIFI_STATE_CHANGED</item>
+        <item>android.net.wifi.SCAN_RESULTS</item>
+        <item>android.net.wifi.STATE_CHANGE</item>
+        <item>android.net.wifi.RSSI_CHANGED</item>
+        <item>android.location.GPS_ENABLED_CHANGE</item>
+        <item>org.agoo.android.intent.action.ELECTION_RESULT_V4</item>
+        <item>com.tencent.android.tpush.service.channel.heartbeatIntent</item>
+        <item>com.tencent.android.tpush.action.SDK</item>
+        <item>com.baidu.android.pushservice.action.METHOD</item>
+        <item>com.igexin.sdk.action.execute</item>
+        <item>com.igexin.sdk.action.pushmanager</item>
+        <item>com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP</item>
+        <item>com.tencent.mm.plugin.openapi.Intent.ACTION_HANDLE_APP_REGISTER</item>
+        <item>com.huawei.espace.pushcheck</item>
+        <item>com.baidu.sapi2.ACTION_HOUR_FREQUENCY</item>
+        <item>com.baidu.android.pushservice.action.BIND_SYNC</item>
+        <item>android.location.GPS_FIX_CHANGE</item>
+        <item>com.android.eguan.drivermonitor</item>
+        <item>android.bluetooth.device.action.ACL_CONNECTED</item>
+        <item>android.bluetooth.device.action.ACL_DISCONNECTED</item>
+        <item>android.bluetooth.headset.profile.action.CONNECTION_STATE_CHANGED</item>
+        <item>android.os.action.DEVICE_IDLE_MODE_CHANGED</item>
+        <item>android.net.wifi.CONFIGURED_NETWORKS_CHANGE</item>
+        <item>com.action.utdid</item>
+        <item>wx_global_action</item>
+        <item>com.jingdong.jdpush.MSG_CENTER</item>
+        <item>com.bytedance.ttnet.config.appconfig.SYNC_MAIN_PROCESS_CONFIG</item>
+        <item>com.test.freezetest.action</item>
+        <!-- add for OFreezer3.0-->
+        <item>android.intent.action.DROPBOX_ENTRY_ADDED</item>
+        <item>android.intent.action.NEW_OUTGOING_CALL</item>
+        <item>NETWORK_CONDITIONS_MEASURED</item>
+    </defaultProxyBc>
+    <!-- proxy broadcast white&black&drop (pkgName+action) -->
+    <proxyBroadcast type="black" pkg="*" action="android.intent.action.BATTERY_CHANGED"/>
+    <proxyBroadcast type="black" pkg="*" action="android.intent.action.TIME_TICK"/>
+    <proxyBroadcast type="black" pkg="*" action="android.net.wifi.SCAN_RESULTS"/>
+    <proxyBroadcast type="black" pkg="*" action="android.intent.action.USER_PRESENT"/>
+    <proxyBroadcast type="black" pkg="*" action="android.net.wifi.RSSI_CHANGED"/>
+
+    <proxyBcConfig proxyAutoStart="true" />
+
+    <proxyBcSameKind action1="android.intent.action.SCREEN_ON" action2="android.intent.action.SCREEN_OFF" />
+    <!--proxy broadcast action add/remove/proxy, only one of apptype and pkg-->
+    <!--proxyAction opt="add" action="" appType="" pkg="com.alibaba.android.rimet" /-->
+    <!--proxyAction opt="proxy" pkg="" action=""/-->
+    <!-- proxy broadcast exclude action, appType/pkg/* -->
+    <proxyBcExcludeAction action="android.location.GPS_FIX_CHANGE" appType="7#2#11" pkg=""/>
+    <proxyBcExcludeAction action="android.net.wifi.WIFI_STATE_CHANGED" appType="7#8" pkg=""/>
+    <proxyBcExcludeAction action="android.net.conn.CONNECTIVITY_CHANGE" appType="7#8" pkg=""/>
+
+    <!--proxy wakelock 1.0 -->
+    <defaultProxyWorkSourceTag defaultWorkSourceType="*job*" />
+    <defaultProxyWorkSourceTag_v2 defaultWorkSourceType="*job*#AudioMix"/>
+
+    <proxyButDropTag proxyButDropType="AudioMix#*location*" />
+    <blackListProxyWorkSourceTag packageName="com.google.android.gms" WorkSourceType="*job*#*location*" />
+    <blackListProxyWorkSourceTag packageName="com.google.android.gsf" WorkSourceType="*job*#*location*" />
+
+    <!--proxy wakelock 2.0 -->
+    <!-- proxyButDropTypes(26,10,32): 10="SCREEN_BRIGHT_WAKE_LOCK" 26="FULL_WAKE_LOCK" 32="PROXIMITY_SCREEN_OFF_WAKE_LOCK" 6="SCREEN_DIM_WAKE_LOCK " -->
+    <proxyWakeLock supportWorkSourceTags="AudioMix#WindowManager/displayId:0#" unSupportedWlTypes="" proxyButDropTypes="26#10#32#6"/>
+    <blackListProxyWakeLock packageName="com.google.android.gms#com.google.android.gsf" supportWorkSourceTags="*job*#*location*#AudioMix#*sync*" proxyButDropTags="AudioMix#*location*"/>
+    <proxyWL>
+        <!--wakelock type="white" tag="" pkg="*" enable="true"/-->
+        <!---tag:wakelock tag; proxy: proxy cpn;-->
+        <wakelock type="proxy" tag="*job.deadline*#*job.delay*" pkg="*" proxy="4" enable="true"/>
+        <wakelock type="black" tag="*" pkg="com.google.android.gms#com.google.android.gsf" enable="true" />
+    </proxyWL>
+
+    <!--scene={lcdon, lcdoff, night} pkg={name} mask={close_socket, aysnbinder, alarm, sync, job, broadcast, provider, bindservice, startservice, activity} -->
+    <!-- There must have one of the non empty attributes {version, code} to prevent the app according to the version. It works while code <= A.10 (default code).  -->
+    <prevent scene="110" pkg="com.google.android.gms" mask="1111111110"/>
+    <prevent scene="110" pkg="com.google.android.gsf" mask="1111111110"/>
+    <prevent scene="110" pkg="com.android.vending" mask="1111111110"/>
+    <prevent scene="110" pkg="com.google.android.partnersetup" mask="1111111110"/>
+    <prevent scene="110" pkg="com.xunmeng.pinduoduo" mask="1111111110" version="" code="A.10"/>
+    <prevent scene="110" pkg="com.taobao.taobao" mask="1111111110" version="" code="A.10"/>
+    <prevent scene="110" pkg="com.teamtalk.im" mask="0111111110"/>
+    <prevent scene="110" pkg="com.tencent.mobileqq" mask="0100000000"/>
+    <prevent scene="110" pkg="com.tencent.mm" mask="0100000000"/>
+
+    <!--scene={lcdon, lcdoff, deepsleep, airplan} pkg={name} mask={binary(alarm, sync, job, broadcast, provider, binds, starts, activity), all} -->
+    <!--allow scene="" pkg="" mask="" /-->
+
+    <!--cpu abnormal config -->
+    <cpuCtlWhiteList pkg="com.coloros.screenrecorder" />
+    <cpuCtlWhiteList pkg="com.tencent.mm" />
+    <cpuCtlRus shortCommCpuRateCtl="50" longCommCpuRateCtl="2.5" shortSysCpuRateCtl="200" longSysCpuRateCtl="30" shortCommCpuRateKill="80" longCommCpuRateKill ="2" collectCpuInfoCycle="120000" cpuCollectEnable="false"/>
+
+    <serviceBumpUnFzReasonList why="create" />
+    <serviceBumpUnFzReasonList why="start" />
+    <serviceBumpUnFzReasonList why="bind" />
+
+    <!--power management config -->
+    <appType>
+        <type name="app_ebook"      value="1"/>
+        <type name="app_sport"      value="2"/>
+        <type name="app_alarm"      value="3"/>
+        <type name="app_game"       value="4"/>
+        <type name="app_video"      value="5"/>
+        <type name="app_music"      value="6"/>
+        <type name="app_im"         value="7"/>
+        <type name="app_email"      value="8"/>
+        <type name="app_livevideo"  value="9"/>
+        <type name="app_lexicon"    value="10"/>
+        <type name="app_navigation" value="11"/>
+        <type name="app_shop"       value="12"/>
+        <type name="app_camera"     value="13"/>
+        <type name="app_browser"    value="14"/>
+        <type name="app_input"      value="15"/>
+        <type name="app_shortvideo" value="16"/>
+        <type name="app_gallery"    value="17"/>
+        <type name="app_marriage"   value="18"/>
+        <type name="app_community"  value="19"/>
+        <type name="app_emoji"      value="20"/>
+        <type name="app_telephony"  value="21"/>
+        <type name="app_radio"      value="22"/>
+        <type name="app_ring"       value="23"/>
+        <type name="app_instrument" value="24"/>
+        <type name="app_wifi"       value="25"/>
+        <type name="app_tool"       value="26"/>
+        <type name="app_life"       value="27"/>
+        <type name="app_bank"       value="28"/>
+        <type name="app_finance"    value="29"/>
+        <type name="app_pay"        value="30"/>
+        <type name="app_newsclient" value="31"/>
+        <type name="app_auidobook"  value="32"/>
+        <type name="app_education"  value="33"/>
+        <type name="app_drivingtest" value="34"/>
+        <type name="app_traffic"    value="35"/>
+        <type name="app_taxi"       value="36"/>
+        <type name="app_bike"       value="37"/>
+        <type name="app_travel"     value="38"/>
+        <type name="app_phonemgr"   value="39"/>
+        <type name="app_sysopt"     value="40"/>
+        <type name="app_phoneclear" value="41"/>
+        <type name="app_filemgr"    value="42"/>
+        <type name="app_entertainment" value="43"/>
+        <type name="app_health"     value="44"/>
+        <type name="app_office"     value="45"/>
+        <type name="app_other"      value="255"/>
+        <type name="app_unknown"    value="-1"/>
+    </appType>
+    <pm_alarm>
+        <wakeupMonitor enable="true" length="100"/>
+    </pm_alarm>
+
+    <!-- audio -->
+    <ignoreAudio>
+        <config audioMixEnable="true" audioInEnable="false" />
+        <appType name="ignoreApp" value= ""/>
+        <appType name="audioApp" value= ""/>
+        <appType name="shortLive" value="-1#1#2#6#22#32"/>
+        <pkg name="white-apptype" value= ""/>
+        <pkg name="black-audiomix" value= "com.tencent.tmgp.pubgmhd#com.tencent.lolm#com.xfplay.play#com.hello.pet#com.tencent.tmgp.sgame#com.tencent.tmgp.dnf#com.happyelements.AndroidAnimal#com.tencent.jkchess#com.tencent.mf.uam#com.netease.l22.nearme.gamecenter"/>
+        <pkg name="black-audioin" value= ""/>
+    </ignoreAudio>
+    <audioSilence>
+        <config enable="true"/>
+        <whitePkg name=""/>
+    </audioSilence>
+
+    <appWidget>
+        <config timeEnable="true" bootTime="300000" defaultUpdateTime="300000" visibleUpdateTime="30000"/>
+        <ignoreApp pkg="com.tencent.mm" />
+        <ignoreAppType value="4" />
+        <!-- <app   name="" appUpdateTime=""/> -->
+        <!-- <white name=""/>-->
+    </appWidget>
+    <appCard>
+        <config enable="true" updateThresholdTime="5000"/>
+        <whiteCaller name="com.oplus.pantanal.ums" />
+        <whiteCaller name="com.android.launcher" />
+        <lcdOffConfig callerName="" whitePkg="" blackPkg=""/>
+        <ignoreApp pkg="com.tencent.mm" />
+        <ignoreAppType value="4" />
+    </appCard>
+
+    <proxyBinder>
+        <config enable="true"/>
+        <!--descConfig desc="" pkg="" /-->
+    </proxyBinder>
+    <!--proxy sensor -->
+    <proxySensor>
+        <config enable="true" proxyType="true"/>
+        <proxyPkg name=""/>
+        <proxyType name="*"/>
+        <!-- add for 2520912 -->
+        <proxyType name="android.sensor.accelerometer"/>
+        <proxyType name="android.sensor.magnetic_field"/>
+        <proxyType name="android.sensor.gyroscope"/>
+        <proxyType name="android.sensor.light"/>
+        <!-- whiteTypePkg: more than one config-->
+        <!-- whiteTypePkg: type="*" or type=""  will effect all type. -->
+        <!-- whiteTypePkg: pkg="*"              will not take effect. -->
+        <whiteTypePkg type="*" pkg="com.qualcomm.qti.sensors.qsensortest"/>
+    </proxySensor>
+
+    <uidIdle>
+        <config enable="true"/>
+        <appType-white type="7"/>
+        <pkg-white pkg=""/>
+    </uidIdle>
+    <high-loading>
+        <skipFrames>
+            <config enable="true" duration="30000" count="20" />
+        </skipFrames>
+        <cpuloading>
+            <config enable="true" loadingTopCnt="20"/>
+            <threshold total="90" littleCoreAvg="95" bigCoreAvg="80"/>
+        </cpuloading>
+    </high-loading>
+    <cpuHighLoad>
+        <scene  enable="true" whiteList="" />
+        <freeze enable="true" whiteList="" />
+    </cpuHighLoad>
+    <freezeCheckTime>
+        <recentTime value = "15000" />
+        <checkTime type = "recent" RToM="3000" MToF="3000" />
+        <checkTime type = "normal" RToM="3000" MToF="3000" />
+        <normal  RToM="5000" MToF="6000" />
+        <appType type="app_game" RToM="40000" MToF="10000" />
+        <appType type="app_im" RToM="6000" MToF="5000" />
+        <eventType type="asyncbinder-n" MToF="1500" />
+        <eventType type="asyncbinder-wl" MToF="3000" />
+        <eventType type="input" RToF="5500" />
+        <autoStart RToM="20000" MToF="10000" />
+        <cpuHighLoad type="normal" RToM="1000" MToF="5000" />
+        <cpuHighLoad type="recent" RToM="6000" MToF="5000" />
+        <scene scene="dynamic-background" RToM="3000" MToF="3000" importanceInterval="3000" />
+        <asyncBinder delayTime="3000" />
+    </freezeCheckTime>
+
+    <recentApp recentTimeS="30" blackList="com.android.launcher#com.android.settings#com.oplus.logkit" />
+
+    <nativeconfig>
+        <switch>1</switch>
+        <max_dex2oat_pids>30</max_dex2oat_pids>
+        <freeze_fling_dex2oat>
+            <switch>1</switch>
+            <dex2oat_reason>install start-app</dex2oat_reason>
+            <skippedFrames>1 10 2500</skippedFrames> <!-- first param: 1 enable, 0 disable;  second param: skippedframes threshold-->
+            <cpuloading>1 40 2500</cpuloading> <!-- first param: 1 enable, 0 disable;  second param: total cpu load threshold;-->
+            <donot_freeze_app_list>
+                <item>com.heytap.market</item>
+                <item>com.android.packageinstaller</item>
+                <item>com.android.settings</item>
+            </donot_freeze_app_list>
+            <freeze_param>
+                <interval>3000</interval>
+                <freeze_duration>1500</freeze_duration>
+            </freeze_param>
+        </freeze_fling_dex2oat>
+
+        <freeze_launch_dex2oat>
+            <switch>1</switch>
+            <freeze_allow_list>
+                <item>com.oplus.camera</item>
+                <item>com.oppo.camera</item>
+            </freeze_allow_list>
+            <freeze_param>
+                <interval>3000</interval>
+                <freeze_duration>2000</freeze_duration>
+            </freeze_param>
+        </freeze_launch_dex2oat>
+
+        <freeze_app_launch_dex2oat>
+            <switch>1</switch>
+            <donot_freeze_app_list>
+                <item>com.android.launcher</item>
+            </donot_freeze_app_list>
+            <freeze_param>
+                <interval>3000</interval>
+                <freeze_duration>2000</freeze_duration>
+            </freeze_param>
+        </freeze_app_launch_dex2oat>
+
+        <freeze_bio_unlock_dex2oat>
+            <switch>1</switch>
+            <freeze_param>
+                <interval>3000</interval>
+                <freeze_duration>2000</freeze_duration>
+            </freeze_param>
+        </freeze_bio_unlock_dex2oat>
+    </nativeconfig>
+
+    <strictMode enable="true" version="2">
+        <highExtremeMode enable="true" level="5">
+            <proxyWakeLock proxyWSTags="*dexopt*" dropTags=""/>
+            <freezeInterval appType="1000" guardTime="1500" RToM="1000" MToF="0" MToFST="500" checkImportance="2000"/>
+            <rule>
+                <proxy appType="1000" enterM="10011111" exitM="11111111" enterF="11111111" exitF="1000000" />
+            </rule>
+        </highExtremeMode>
+        <extremeMode enable="true" level="4">
+            <proxyWakeLock proxyWSTags="*dexopt*" dropTags=""/>
+            <freezeInterval appType="1000" RToM="2000" MToF="1000" MToFST="1000" checkImportance="3000"/>
+            <extremeFgMode enable="true" enterDelay="5000" RToM="40000" MToF="20000" />
+            <rule>
+                <!---proxyService=0x0001
+                     proxyBC=0x0002
+                     proxyJob=0x0004
+                     proxySensor=0x0008
+                     proxyBinder=0x0010
+                     proxyAlarm=0x0020
+                     proxyWakelock=0x0040
+                     proxyGps=0x0080
+                    -->
+                <proxy appType="1000" enterM="10000111" exitM="11111111" enterF="11111111" exitF="1001000" />
+            </rule>
+        </extremeMode>
+        <highLoadMode enable="true" level="3">
+            <!--in 15s, R-M=5000,M-F=1000 impt=5000
+                after 15s, R-M=2000,M-F=0 impt=1000
+                appType: 4-Game,7-IM, 1000-default -->
+            <freezeInterval appType="1000" guardTime="15000" RToM="5000" RToMST = "2000" MToF="2000" MToFST="1000" R-M-F="true" checkImportance="5000"/>
+            <freezeInterval appType="4#7" RToM="5000" MToF="2000" MToFST="2000" checkImportance="5000"/>
+             <rule>
+                <imptcase skipFlags="40000" />
+                <proxy appType="1000" enterM="10111111" exitM="10111111" enterF="11111111" exitF="1000000" />
+                <proxy appType="7" enterM="10000101" exitM="11111111" enterF="11111111" exitF="1111010" />
+            </rule>
+        </highLoadMode>
+        <highPerfMode enable="true" level="2">
+            <freezeInterval appType="1000" RToM="4000" MToF="1000" MToFST="1000" checkImportance="5000"/>
+            <rule>
+                <proxy appType="1000" enterM="10000111" exitM="11111111" enterF="11111111" exitF="1101000" />
+            </rule>
+        </highPerfMode>
+        <highLoadMode enable="true" level="1">
+            <!--in 15s, R-M=5000,M-F=1000 impt=5000
+                after 15s, R-M=2000,M-F=0 impt=1000
+                R-M-F: hans freeze duration after unfreezing to R (R-M=5000, M-F=0) -->
+            <freezeInterval appType="1000" RToM="5000" MToF="2000" MToFST="2000" R-M-F="false" checkImportance="5000" />
+            <freezeInterval appType="4#7" RToM="5000" MToF="2000" MToFST="2000" checkImportance="5000" />
+            <rule>
+                <proxy appType="1000" enterM="10000111" exitM="11111111" enterF="11111111" exitF="1101000" />
+            </rule>
+        </highLoadMode>
+    </strictMode>
+
+    <restrictNet>
+        <item name="appType" value="4" delayTime="60000" />
+    </restrictNet>
+
+    <restrictNetForBrand>
+        <item brand="OnePlus" name="appType" value="4" delayTime="300000" />
+    </restrictNetForBrand>
+
+    <binderCheck enable="true" threshold="4">
+        <!-- <package name="com.test.demo" />-->
+        <checkAllPkg name="com.tencent.wework" />
+        <checkAllPkg name="com.google.android.gms" />
+        <checkAllPkg name="com.google.android.gsf" />
+    </binderCheck>
+
+    <checkNfcPayImportance enable="false" />
+
+    <thermalMode enable="true" enterLevel="10" exitLevel="9" >
+        <!-- <whitePkg name="com.test.demo" />-->
+    </thermalMode>
+
+    <keyProc>
+        <config alarmEnable="true"/>
+        <item type="monitor" pkg="com.tencent.mm#com.tencent.mobileqq"/>
+        <item type="IM" pkg="com.tencent.mm" proc="com.tencent.mm#com.tencent.mm:tools#com.tencent.mm:toolsmp#com.tencent.mm:appbrand0" />
+        <item type="IM" pkg="com.tencent.mobileqq" proc="com.tencent.mobileqq#com.tencent.mobileqq:tool#com.tencent.mobileqq:qzone" />
+    </keyProc>
+
+    <proxyGps>
+        <config enable="true" />
+        <item type="white" pkg="" appType="2#11#35#36#37#38" />
+        <item type="black" pkg="" appType="1#4#5#6#9#10#13#14#16#18#20#22#23#24#25#28#29#31#32#33#34#39#40#41#42#43" />
+        <item type="gray"  pkg="" appType="3#12#17#19#21#26#27#30#38#44#45#-1" />
+        <proxyConfig>
+            <typeConfig name="gps"   type="11#35#36#37#38" />
+            <typeConfig name="sport" type="2" />
+            <!-- the interval time unit: minutes -->
+            <screenOffStillForceProxyConfig enable="true" gpsInterval="5" defaultInterval="3"/>
+            <appType type="11#35#36#37#38" recentUse="3" serviceType="8" fgService="true" stillInterval="30" audioInterval="30" notification="true" stepCounter="true" />
+            <appType type="2"              recentUse="3" serviceType="8" fgService="true" stillInterval="30" audioInterval="10" notification="true" stepCounter="true" />
+            <lcdOnDefaultConfig            serviceType="8" stepCounter="true" audioInterval="10"/>
+            <lcdOffDefaultConfig           serviceType="8" stepCounter="true" />
+        </proxyConfig>
+    </proxyGps>
+
+    <proxyBtScan>
+        <config enable="true" />
+    </proxyBtScan>
+
+    <proxyCpnExtension>
+        <!---proxyService=0x0001
+             proxyBC=0x0002
+             proxyJob=0x0004
+             proxySensor=0x0008
+             proxyBinder=0x0010
+             proxyAlarm=0x0020
+             proxyWakelock=0x0040
+             proxyGps=0x0080
+             proxyAudio=0x00100
+             proxyBtScan=0x00200
+             uidIdle=0x00400
+            -->
+        <config enable="false" cpnMask="" />
+    </proxyCpnExtension>
+
+    <packageConfig>
+        <package name="com.tencent.tmgp.sgame">
+            <appType type="4"/>
+        </package>
+        <package name="com.tencent.tmgp.pubgmhd">
+            <appType type="4"/>
+        </package>
+        <package name="com.tencent.tmgp.gnyx">
+            <appType type="4"/>
+        </package>
+        <package name="com.tencent.jkchess">
+            <appType type="4"/>
+        </package>
+        <package name="com.tencent.mf.uam">
+            <appType type="4"/>
+        </package>
+        <package name="com.happyelements.AndroidAnimal.qq">
+            <appType type="4"/>
+        </package>
+        <package name="com.miHoYo.Yuanshen">
+            <appType type="4"/>
+        </package>
+        <package name="com.miHoYo.hkrpg">
+            <appType type="4"/>
+        </package>
+        <package name="com.tencent.KiHan">
+            <appType type="4"/>
+        </package>
+        <package name="com.hypergryph.arknights">
+            <appType type="4"/>
+        </package>
+        <package name="com.sofunny.Sausage">
+            <appType type="4"/>
+        </package>
+        <package name="com.netease.party.aligames">
+            <appType type="4"/>
+        </package>
+        <package name="com.netease.nshm">
+            <appType type="4"/>
+        </package>
+        <package name="com.tencent.lolm">
+            <appType type="4"/>
+        </package>
+        <package name="com.wepie.weplay">
+            <appType type="4"/>
+        </package>
+        <package name="com.alibaba.android.rimet">
+            <appType type="7"/>
+        </package>
+        <package name="com.tencent.wework">
+            <appType type="7"/>
+        </package>
+        <package name="com.teamtalk.im">
+            <appType type="7"/>
+        </package>
+    </packageConfig>
+
+    <abnormalConfig>
+        <config reason = "TransBinder" >
+            <action duration = "180000" threshold = "15" type = "1" >
+                <item condition = "Visible" param = "true" />
+                <item condition = "RecentLock" param = "true" />
+                <item condition = "RecentUse" param = "5" />
+                <item condition = "RecentBack" param = "300000" />
+                <item condition = "Audio" param = "180000" />
+                <item condition = "GPS" param = "300000" />
+                <item condition = "Widget" param = "true" />
+            </action>
+        </config>
+    </abnormalConfig>
+    <superFreezeConfig enable="true">
+        <trimMemUFZConfig enable="true" number="5"/>
+        <minOomAdj value="500"/>
+        <!-- activity stoppped delay : ms -->
+        <activityStopDelay delay="100"/>
+        <minMemorySupport capacity="16"/>
+    </superFreezeConfig>
+
+    <android-freeze enable="true" whiteEnable="true" killWhiteEnable="false">
+        <SysAppExemptAndroidFreezeConfig enable="true">
+            <ExemptQuotaConfig pkg="com.oplus.camera" bgMode="256"/>
+        </SysAppExemptAndroidFreezeConfig>
+    </android-freeze>
+
+    <minSystem>
+        <!-- hans config -->
+        <hans enable = "true" /> <!-- only effective in 15.0.1 version -->
+        <game       enable= "true" />
+        <camera     enable= "true" whiteList="com.coloros.smartsidebar" enterCameraMinSysIntervalTime= "3000" />
+        <liveStream enable= "true" whiteList="com.coloros.smartsidebar" enterPackage= "com.ss.android.ugc.aweme#com.xingin.xhs" />
+        <!-- native freeze config -->
+        <config mindfulGameEnable="true" delayTime="5000" adjFrzMin = "200" adjOriFrzMin = "900"/>
+        <item proc="com.android.settings#com.android.settings:background"/>
+        <item proc="com.oplus.notificationmanager#com.oplus.notificationmanager:ui"/>
+        <item proc="com.oplus.wirelesssettings#com.oplus.wirelesssettings:qrscan#com.oplus.wirelesssettings:seed#com.oplus.wirelesssettings:tzupdate"/>
+        <item proc="com.oplus.healthservice"/>
+        <item proc="com.oplus.securitypermission#com.oplus.securitypermission:ui"/>
+        <item proc="com.oplus.trafficmonitor#com.oplus.trafficmonitor:network_control"/>
+    </minSystem>
+
+    <thermalGuard>
+        <hans enable = "true" />
+        <L1 enterLevel="4" exitLevel="3" />
+        <L2 enterLevel="7" exitLevel="5" enterRate="0.5" />
+        <current monitorLevel="4" />
+        <smallWindowPkg pkg = "com.tencent.mm#com.tencent.mobileqq" />
+        <keepAliveImpPkg pkg = "com.oplus.metis#com.oplus.pantanal.ums#com.coloros.sceneservice" />
+        <gpsAppType type = "11#36#37#38" />
+        <thermalPriorityLevel level="1" enterLevel="4"  exitLevel="3"  downgradeEnterLevel="4" />
+        <thermalPriorityLevel level="2" enterLevel="7"  exitLevel="5"  downgradeEnterLevel="10" />
+        <thermalPriorityLevel level="3" enterLevel="10" exitLevel="7"  downgradeEnterLevel="12" />
+        <thermalPriorityLevel level="4" enterLevel="12" exitLevel="10" downgradeEnterLevel="99" />
+    </thermalGuard>
+
+    <appQuotaConfig>
+        <continuousTaskCfg maxDuration="3600000" protectTimeAfterExceed="10000" />
+    </appQuotaConfig>
+</filter-conf>

@@ -1,6 +1,41 @@
 @echo off
 chcp 65001 >nul
-set NDK_ROOT=C:\android-ndk-r27d-windows\android-ndk-r27d
+set "USER_NDK_ROOT=%NDK_ROOT%"
+set "FOUND_NDK_ROOT="
+if defined ANDROID_NDK_ROOT (
+    if exist "%ANDROID_NDK_ROOT%\toolchains\llvm\prebuilt\windows-x86_64\bin\clang.exe" (
+        set "FOUND_NDK_ROOT=%ANDROID_NDK_ROOT%"
+    )
+)
+if not defined FOUND_NDK_ROOT (
+    if defined USER_NDK_ROOT (
+        if exist "%USER_NDK_ROOT%\toolchains\llvm\prebuilt\windows-x86_64\bin\clang.exe" (
+            set "FOUND_NDK_ROOT=%USER_NDK_ROOT%"
+        )
+    )
+)
+if not defined FOUND_NDK_ROOT (
+    if exist "C:\android-ndk-r27d-windows\huanjing\android-ndk-r30-beta1\toolchains\llvm\prebuilt\windows-x86_64\bin\clang.exe" (
+        set "FOUND_NDK_ROOT=C:\android-ndk-r27d-windows\huanjing\android-ndk-r30-beta1"
+    )
+)
+if not defined FOUND_NDK_ROOT (
+    if exist "C:\android-ndk-r27d-windows\huanjing\android-ndk-r30\toolchains\llvm\prebuilt\windows-x86_64\bin\clang.exe" (
+        set "FOUND_NDK_ROOT=C:\android-ndk-r27d-windows\huanjing\android-ndk-r30"
+    )
+)
+if not defined FOUND_NDK_ROOT (
+    if exist "C:\android-ndk-r27d-windows\android-ndk-r27d\toolchains\llvm\prebuilt\windows-x86_64\bin\clang.exe" (
+        set "FOUND_NDK_ROOT=C:\android-ndk-r27d-windows\android-ndk-r27d"
+    )
+)
+if not defined FOUND_NDK_ROOT (
+    echo 错误: 找不到可用的 Android NDK。
+    echo 提示: 优先设置 ANDROID_NDK_ROOT 或 NDK_ROOT。
+    pause
+    exit /b 1
+)
+set "NDK_ROOT=%FOUND_NDK_ROOT%"
 set TARGET_ARCH=aarch64-linux-android29
 
 if not exist "%NDK_ROOT%" (

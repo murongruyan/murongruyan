@@ -33,12 +33,12 @@
 ## 编译说明 / Build
 本项目依赖 Android NDK 进行编译。
 
-1.  确保电脑已安装 Android NDK。
-2.  编辑 `compile_final.bat`，将 `NDK_ROOT` 修改为你本地的 NDK 路径。
+1.  确保电脑已安装 Android NDK，建议优先使用 `NDK 30.0.14904198` 或兼容的 `r30` 系版本。
+2.  优先通过环境变量 `ANDROID_NDK_ROOT` 或 `NDK_ROOT` 指向你的本地 NDK；如果未设置，`compile_final.bat` 会继续尝试本机常见的 `r30-beta1 / r30` 路径，最后才回退旧路径。
 3.  双击运行 `compile_final.bat`。
 4.  编译成功后，会生成 `libthermal_hook.so` 和 `thermal_monitor` 两个文件。
 5.  本地打包时，将这两个文件放入 `module-common/bin/` 中。
-6.  GitHub Actions 发版时会在 Ubuntu Runner 上使用 Android NDK 自动重新编译这两个二进制，再组装成最终模块包。
+6.  GitHub Actions 发版时会在 Ubuntu Runner 上使用 `NDK 30.0.14904198` 自动重新编译这两个二进制，再组装成最终模块包。
 
 ## 免责声明 / Disclaimer
 *   本模块通过修改系统底层行为实现功能，属于高风险操作。

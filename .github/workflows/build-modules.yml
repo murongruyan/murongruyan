@@ -300,12 +300,14 @@ jobs:
           PY
 
       - name: Upload Module Zips
+        continue-on-error: true
         uses: actions/upload-artifact@v7
         with:
           name: murongruyan-modules
           path: |
             dist/${{ env.FREEZER_ZIP }}
             dist/${{ env.TOMBSTONE_ZIP }}
+          retention-days: 1
 
       - name: Commit Version Files
         if: github.event_name == 'workflow_dispatch'
